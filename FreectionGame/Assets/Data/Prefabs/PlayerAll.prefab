@@ -50,6 +50,10 @@ PrefabInstance:
       propertyPath: jumpStrength
       value: 350
       objectReference: {fileID: 0}
+    - target: {fileID: 183481235271714745, guid: 28211fc00822e72469e7fa9862de27ec, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 5978101401065099790}
     - target: {fileID: 4530460236566485417, guid: 28211fc00822e72469e7fa9862de27ec, type: 3}
       propertyPath: m_Name
       value: Player
@@ -270,5 +274,10 @@ PrefabInstance:
 --- !u!4 &1698500719069794830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6553997372199197016, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+  m_PrefabInstance: {fileID: 5577198536436501334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &5978101401065099790 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2274400309820283224, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
   m_PrefabInstance: {fileID: 5577198536436501334}
   m_PrefabAsset: {fileID: 0}

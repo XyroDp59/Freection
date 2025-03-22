@@ -531,6 +531,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &1104452601 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5978101401065099790, guid: 21d9df20582aac044b2d5c5bfb43613f, type: 3}
+  m_PrefabInstance: {fileID: 4252602903087823502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &1626619222 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 6708505852937540372, guid: 21d9df20582aac044b2d5c5bfb43613f, type: 3}
+  m_PrefabInstance: {fileID: 4252602903087823502}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1635405116
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,6 +759,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 358766937513621689, guid: 21d9df20582aac044b2d5c5bfb43613f, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 1104452601}
+    - target: {fileID: 358766937513621689, guid: 21d9df20582aac044b2d5c5bfb43613f, type: 3}
+      propertyPath: sphereCollider
+      value: 
+      objectReference: {fileID: 1626619222}
+    - target: {fileID: 824894298210304446, guid: 21d9df20582aac044b2d5c5bfb43613f, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 1685565835127150780, guid: 21d9df20582aac044b2d5c5bfb43613f, type: 3}
       propertyPath: m_Name
       value: PlayerAll

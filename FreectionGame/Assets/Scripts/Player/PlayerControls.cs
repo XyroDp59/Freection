@@ -7,16 +7,21 @@ public class PlayerControls : MonoBehaviour
 {
     public static PlayerControls Instance;
 
+    [Header("References")]
+    [SerializeField] Camera playerCamera;
+    [SerializeField] Transform visualSphere;
+    [SerializeField] SphereCollider sphereCollider;
+    [Header("Physics")]
     [SerializeField] float moveSpeed;
     [SerializeField] PhysicMaterial bounceMat;
     [SerializeField] PhysicMaterial nofrictionMat;
+    [Header("Jump")]
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float jumpDelay;
     [SerializeField] float jumpStrength;
 
 
     Rigidbody rb;
-    [SerializeField] SphereCollider sphereCollider;
 
     Inputs inputs;
     InputAction moveAction;
@@ -84,7 +89,13 @@ public class PlayerControls : MonoBehaviour
         isGrounded = Physics.CheckSphere(transform.position - Vector3.up * (0.05f + sphereCollider.radius * 0.075f), sphereCollider.radius * 0.925f, groundLayer, QueryTriggerInteraction.UseGlobal);
 
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
-        Vector3 realMove = Time.deltaTime * moveSpeed * (transform.rotation * new Vector3(moveInput.x, 0, moveInput.y));
+        Vector3 forwardVec = Vector3.ProjectOnPlane(playerCamera.transform.forward, Vector3.up);
+        Vector3 rightVec = Vector3.ProjectOnPlane(playerCamera.transform.right, Vector3.up);
+        Vector3 realMove = Time.deltaTime * moveSpeed * (rightVec * moveInput.x + forwardVec * moveInput.y);
+
+        Vector2 velAxis = Vector2.Perpendicular(new Vector2(rb.velocity.x, rb.velocity.z)).normalized;
+
+        visualSphere.Rotate(new Vector3(-velAxis.x, 0, -velAxis.y), rb.velocity.magnitude * Time.deltaTime * 50f, Space.World);
 
         rb.AddForce(realMove, ForceMode.Force);
     }
