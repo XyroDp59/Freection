@@ -23,6 +23,12 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float baseTopHeight;
     [SerializeField] private float baseTopRad;
 
+    [Header("FOV")]
+    [SerializeField] private AnimationCurve curveFOV;
+    [SerializeField] private float minFOV = 35f;
+    [SerializeField] private float maxFOV = 75f;
+    float FOV;
+
     private Inputs inputs;
     InputAction zoomAction;
 
@@ -44,15 +50,6 @@ public class PlayerCamera : MonoBehaviour
         freeLook.ForceCameraPosition(position, rotation);
     }
 
-    private void Update() {
-        
-        float zoomDelta = zoomAction.ReadValue<float>();
-
-        wantedZoom = Mathf.Clamp(wantedZoom + zoomDelta * Time.deltaTime * zoomSpeed, minZoom, maxZoom);
-        currentZoom = Mathf.Lerp(currentZoom, wantedZoom, 0.05f);
-
-        SetCamZoom();
-    }
 
     public void SetCamZoom()
     {
@@ -63,4 +60,23 @@ public class PlayerCamera : MonoBehaviour
         freeLook.m_Orbits[2].m_Height = baseTopHeight * currentZoom;
         freeLook.m_Orbits[2].m_Radius = baseTopRad * currentZoom;
     }
+
+    private void Update() {
+        
+        float zoomDelta = zoomAction.ReadValue<float>();
+
+        wantedZoom = Mathf.Clamp(wantedZoom + zoomDelta * Time.deltaTime * zoomSpeed, minZoom, maxZoom);
+        currentZoom = Mathf.Lerp(currentZoom, wantedZoom, 0.05f);
+
+        SetCamZoom();
+
+
+        float v = PlayerControls.Instance.rb.velocity.magnitude / 50f;
+        if (v < curveFOV.keys[curveFOV.length - 1].time)
+            FOV = minFOV + (maxFOV-minFOV) * curveFOV.Evaluate(v);
+        else FOV = minFOV + (maxFOV - minFOV) * curveFOV.keys[curveFOV.length - 1].value;
+        freeLook.m_Lens.FieldOfView = FOV;
+    }
+
+
 }

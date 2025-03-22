@@ -286,6 +286,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6381168f0dfbd646870a2ebac5bdc40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minZoom: 1
+  maxZoom: 15
+  zoomSpeed: 5
+  baseBotHeight: -0.432
+  baseBotRad: 3
+  baseMidHeight: 0.568
+  baseMidRad: 2
+  baseTopHeight: 1
+  baseTopRad: 1.6
+  curveFOV:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0021881869
+      value: 0.0013879037
+      inSlope: 1.000802
+      outSlope: 1.000802
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.000802
+      outSlope: 1.000802
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minFOV: 35
+  maxFOV: 80
 --- !u!1001 &5577198536436501334
 PrefabInstance:
   m_ObjectHideFlags: 0
