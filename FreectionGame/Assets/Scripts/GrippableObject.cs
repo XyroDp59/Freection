@@ -18,6 +18,11 @@ public class GrippableObject : MonoBehaviour
         bounds = rend.bounds;
     }
 
+    private void Start()
+    {
+        PlayerControls.Instance.grippableColliders.Add(this);
+    }
+
 
     public bool IsGrippable(Transform player, Vector3 point)
     {

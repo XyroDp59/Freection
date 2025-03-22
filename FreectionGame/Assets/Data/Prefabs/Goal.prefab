@@ -50,9 +50,9 @@ MonoBehaviour:
   onFinish:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+      - m_Target: {fileID: 8423360865947983457}
+        m_TargetAssemblyTypeName: GoalCamera, Assembly-CSharp
+        m_MethodName: ActivateGoalCamera
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -62,19 +62,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 8423360865947983457}
-        m_TargetAssemblyTypeName: GoalCamera, Assembly-CSharp
-        m_MethodName: ActivateGoalCamera
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  goalCamera: {fileID: 0}
+  goalCamera: {fileID: 8423360865947983457}
 --- !u!65 &7110608758248823993
 BoxCollider:
   m_ObjectHideFlags: 0
