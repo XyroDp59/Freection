@@ -9,11 +9,13 @@ public class GrippableObject : MonoBehaviour
     [SerializeField] float minDistance;
     private Collider col;
     [HideInInspector] public Bounds bounds;
+    [HideInInspector] public Renderer rend;
 
     void Awake()
     {
         col = GetComponent<Collider>();
-        bounds = GetComponent<Renderer>().bounds;
+        rend = GetComponent<Renderer>();
+        bounds = rend.bounds;
     }
 
 
