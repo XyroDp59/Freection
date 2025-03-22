@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Data/Scenes/LevelScenes/Golf.unity
     guid: bd5a250927a79e64b95b5e0d6d769082
+  - enabled: 1
+    path: Assets/Data/Scenes/LevelScenes/Swing.unity
+    guid: 6e60dfe90c2e3e0438ca137dc4b0b051
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 453c5e8fd2f429d4e9da65cd47929c0e, type: 3}

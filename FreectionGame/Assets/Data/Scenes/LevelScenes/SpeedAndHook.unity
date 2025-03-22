@@ -1487,6 +1487,7 @@ GameObject:
   - component: {fileID: 426626224}
   - component: {fileID: 426626223}
   - component: {fileID: 426626227}
+  - component: {fileID: 426626228}
   m_Layer: 0
   m_Name: Sphere (3)
   m_TagString: Untagged
@@ -1593,12 +1594,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookInsideDist: 0.5
-  maxDistance: 20
+  maxDistance: 50
   minDistance: 0
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   rend: {fileID: 0}
+--- !u!54 &426626228
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426626222}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &468993064
 GameObject:
   m_ObjectHideFlags: 0
@@ -2043,6 +2071,7 @@ GameObject:
   - component: {fileID: 790331631}
   - component: {fileID: 790331630}
   - component: {fileID: 790331634}
+  - component: {fileID: 790331635}
   m_Layer: 0
   m_Name: Sphere (2)
   m_TagString: Untagged
@@ -2149,12 +2178,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookInsideDist: 0.5
-  maxDistance: 20
+  maxDistance: 50
   minDistance: 0
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   rend: {fileID: 0}
+--- !u!54 &790331635
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790331629}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &791791966
 GameObject:
   m_ObjectHideFlags: 0
@@ -2273,6 +2329,7 @@ GameObject:
   - component: {fileID: 800766994}
   - component: {fileID: 800766993}
   - component: {fileID: 800766997}
+  - component: {fileID: 800766998}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -2379,12 +2436,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookInsideDist: 0.5
-  maxDistance: 20
+  maxDistance: 50
   minDistance: 0
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   rend: {fileID: 0}
+--- !u!54 &800766998
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800766992}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &840484386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2472,6 +2556,7 @@ GameObject:
   - component: {fileID: 1003332511}
   - component: {fileID: 1003332510}
   - component: {fileID: 1003332514}
+  - component: {fileID: 1003332515}
   m_Layer: 0
   m_Name: Sphere (4)
   m_TagString: Untagged
@@ -2578,12 +2663,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookInsideDist: 0.5
-  maxDistance: 20
+  maxDistance: 50
   minDistance: 0
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   rend: {fileID: 0}
+--- !u!54 &1003332515
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003332509}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1023249153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4003,6 +4115,7 @@ GameObject:
   - component: {fileID: 2042442547}
   - component: {fileID: 2042442546}
   - component: {fileID: 2042442550}
+  - component: {fileID: 2042442551}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -4109,12 +4222,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookInsideDist: 0.5
-  maxDistance: 20
+  maxDistance: 50
   minDistance: 0
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   rend: {fileID: 0}
+--- !u!54 &2042442551
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042442545}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2100129241
 GameObject:
   m_ObjectHideFlags: 0

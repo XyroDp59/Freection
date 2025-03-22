@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: LevelData
   m_EditorClassIdentifier: 
   levelSceneName: 
-  bestTime: 0
+  bestTime: 3.402823e+38
+  checkpointTimesOnPB: []
   thumbnail: {fileID: 0}
   unlocked: 0
+  isWon: 0
