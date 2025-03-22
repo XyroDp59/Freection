@@ -37,6 +37,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] LineRenderer hookRenderer;
     [SerializeField] float hookTime;
     [SerializeField] Material outlineMat;
+    [SerializeField] RectTransform hookCursor;
 
     public Rigidbody rb;
 
@@ -133,6 +134,9 @@ public class PlayerControls : MonoBehaviour
         Vector2 velAxis = Vector2.Perpendicular(new Vector2(rb.velocity.x, rb.velocity.z)).normalized;
 
         visualSphere.Rotate(new Vector3(-velAxis.x, 0, -velAxis.y), rb.velocity.magnitude * Time.deltaTime * 50f, Space.World);
+        hookCursor.gameObject.SetActive(!hookRenderer.enabled && grippableObject != null);
+        if (grippableObject != null && !isGripped)
+            hookCursor.anchoredPosition = RectTransformUtility.WorldToScreenPoint(playerCamera, grippableObjectPoint);
         if (hookRenderer.enabled && visualHookCor == null && isGripped)
             hookRenderer.SetPosition(1, grippableObjectPoint - transform.position);
 
