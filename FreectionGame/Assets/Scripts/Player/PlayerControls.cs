@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -12,6 +13,7 @@ public class PlayerControls : MonoBehaviour
     [Header("References")]
     [SerializeField] Camera playerCamera;
     [SerializeField] Transform visualSphere;
+    [SerializeField] Transform deformTransform;
     [SerializeField] SphereCollider sphereCollider;
     [Header("Physics")]
     [SerializeField] float moveSpeed;
@@ -21,11 +23,15 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float jumpDelay;
     [SerializeField] float jumpStrength;
+    [Header("Visuals")]
+    [SerializeField] AnimationCurve bounceDeformCurve;
+    [SerializeField] AnimationCurve jumpDeformCurve;
 
 
     public Rigidbody rb;
 
     Coroutine isDying = null;
+    Coroutine deformCor;
 
     Inputs inputs;
     InputAction moveAction;
@@ -44,6 +50,7 @@ public class PlayerControls : MonoBehaviour
 
     public bool isGrounded;
     bool canJump;
+    bool isBouncing;
 
     void Awake()
     {
@@ -116,6 +123,9 @@ public class PlayerControls : MonoBehaviour
         canJump = false;
         rb.AddForce(jumpStrength * Vector3.up);
         StartCoroutine(lockJumpCor());
+        if (deformCor != null)
+            StopCoroutine(deformCor);
+        deformCor = StartCoroutine(DeformBallCoroutine(-0.5f * Vector3.up));
     }
 
     IEnumerator lockJumpCor()
@@ -127,6 +137,31 @@ public class PlayerControls : MonoBehaviour
     public void SwitchBounce(bool nowBouncing)
     {
         sphereCollider.material = nowBouncing ? bounceMat : nofrictionMat;
+        isBouncing = nowBouncing;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (isBouncing)
+        {
+            if (deformCor != null)
+                StopCoroutine(deformCor);
+            deformCor = StartCoroutine(DeformBallCoroutine(collision.impulse.normalized));
+        }
+    }
+
+    IEnumerator DeformBallCoroutine(Vector3 deformForce)
+    {
+        float timeElapsed = 0f;
+        while (timeElapsed < bounceDeformCurve.keys[bounceDeformCurve.keys.Length-1].time)
+        {
+            deformTransform.localScale = Vector3.one - deformForce * bounceDeformCurve.Evaluate(timeElapsed);
+            deformTransform.localPosition = -deformForce * bounceDeformCurve.Evaluate(timeElapsed);
+            timeElapsed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        deformTransform.localScale = Vector3.one;
+
     }
 
     public void UseGrapple()
