@@ -69,6 +69,7 @@ public class TimerManager : MonoBehaviour
     public void StartTimer()
     {
         isTimeStarted = true;
+        isTimeStopped = false;
         gameTime = 0.0f;
     }
 
@@ -84,17 +85,17 @@ public class TimerManager : MonoBehaviour
 
     public void ResetTimer()
     {
-        gameTime = 0.0f;
+        StartTimer();
         gameTimerText.text = TimeToString(gameTime);
 
-        SerializedLevelData currentLevel = LevelManager.instance.currentLevelData;
-        if (!currentLevel.isWon)
+        if (!Goal.hasFinished && !LevelManager.instance.currentLevelData.isWon)
         {
             previousCheckpointTimes = checkpointTimes;
         }
         checkpointTimes.Clear();
 
         InterruptShowCheckpoint();
+
     }
 
     public void ReachCheckpoint(Checkpoint checkpoint)
@@ -116,8 +117,9 @@ public class TimerManager : MonoBehaviour
         checkpointTimerText.text = TimeToString(checkpointTime.time);
         if (showDelta)
         {
-            checkpointDeltaText.text = TimeToString(checkpointTime.time - previousTime.time);
-            checkpointDeltaText.color = checkpointTime.time >= previousTime.time ? Color.green : Color.red;
+            string deltaString = checkpointTime.time > previousTime.time ? "+" : "-";
+            checkpointDeltaText.text = deltaString + TimeToString(checkpointTime.time - previousTime.time);
+            checkpointDeltaText.color = checkpointTime.time > previousTime.time ? Color.red : Color.green;
         }
 
         checkpointTimer.SetActive(true);
@@ -133,7 +135,8 @@ public class TimerManager : MonoBehaviour
 
     public void RefreshCheckpointTimes() // When reseting level from a victory
     {
-        if (gameTime < bestTime)
+
+        if (Goal.hasFinished && gameTime < bestTime)
         {
             bestTime = gameTime;
             previousCheckpointTimes = checkpointTimes;

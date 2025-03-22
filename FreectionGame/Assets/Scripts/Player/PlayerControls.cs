@@ -31,11 +31,16 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] float trailCurveLog;
     [SerializeField] float trailStartOffset;
     [SerializeField] float trailLengthLerp;
+    [Header("Grappling Hook")]
+    public List<GrippableObject> grippableColliders;
+    [SerializeField] LineRenderer hookRenderer;
+    [SerializeField] float hookTime;
 
     public Rigidbody rb;
 
     Coroutine isDying = null;
     Coroutine deformCor;
+    Coroutine visualHookCor;
 
     Inputs inputs;
     InputAction moveAction;
@@ -55,6 +60,11 @@ public class PlayerControls : MonoBehaviour
     public bool isGrounded;
     bool canJump;
     bool isBouncing;
+    bool isGripped;
+    GrippableObject grippableObject;
+    Vector3 grippableObjectPoint;
+    ConfigurableJoint hookJoint;
+    Plane[] planes;
     public bool blockGameInputs = false;
 
     void Awake()
@@ -65,6 +75,7 @@ public class PlayerControls : MonoBehaviour
         Instance = this;
 
         rb = GetComponent<Rigidbody>();
+        hookJoint = GetComponent<ConfigurableJoint>();
 
         canJump = true;
 
@@ -85,7 +96,7 @@ public class PlayerControls : MonoBehaviour
         grappleAction.canceled += (_) => ReleaseGrapple();
         boostAction.performed += (_) => Boost();
         resetCheckpointAction.performed += (_) => TryRespawn(CheckpointManager.instance.currentCheckpoint, false);
-        resetLevelAction.performed += (_) => LevelManager.instance.ResetLevel(this);
+        resetLevelAction.performed += (_) => TryReset();
         pauseMenuAction.performed += (_) => OpenPauseMenu();
 
         inputs.Enable();
@@ -109,6 +120,9 @@ public class PlayerControls : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(transform.position - Vector3.up * (0.05f + sphereCollider.radius * 0.075f), sphereCollider.radius * 0.925f, groundLayer, QueryTriggerInteraction.UseGlobal);
 
+        if (!isGripped)
+            CheckForGrippableObject(out grippableObject, out grippableObjectPoint);
+
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
         Vector3 forwardVec = Vector3.ProjectOnPlane(playerCamera.transform.forward, Vector3.up);
         Vector3 rightVec = Vector3.ProjectOnPlane(playerCamera.transform.right, Vector3.up);
@@ -117,6 +131,8 @@ public class PlayerControls : MonoBehaviour
         Vector2 velAxis = Vector2.Perpendicular(new Vector2(rb.velocity.x, rb.velocity.z)).normalized;
 
         visualSphere.Rotate(new Vector3(-velAxis.x, 0, -velAxis.y), rb.velocity.magnitude * Time.deltaTime * 50f, Space.World);
+        if (hookRenderer.enabled && visualHookCor == null && isGripped)
+            hookRenderer.SetPosition(1, grippableObjectPoint - transform.position);
 
         trailRenderer.time = Mathf.Lerp(trailRenderer.time, Mathf.Max(trailLengthPerSpeedCurve.Evaluate(Mathf.Log(rb.velocity.magnitude, trailCurveLog)) - trailStartOffset, 0), trailLengthLerp);
         trailRenderer.enabled = (trailLengthPerSpeedCurve.Evaluate(Mathf.Log(rb.velocity.magnitude, trailCurveLog)) - trailStartOffset) > 0;
@@ -171,22 +187,92 @@ public class PlayerControls : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         deformTransform.localScale = Vector3.one;
-
     }
 
     public void UseGrapple()
     {
-        if (blockGameInputs) return;
+        if (grippableObject == null || blockGameInputs) return;
+        isGripped = true;
+        hookJoint.connectedBody = grippableObject.GetComponent<Rigidbody>();
+        Vector3 anchor = grippableObjectPoint - grippableObject.transform.position;
+        hookJoint.connectedAnchor = //Vector3.zero;
+            new Vector3(anchor.x / grippableObject.transform.localScale.x, anchor.y / grippableObject.transform.localScale.y, anchor.z / grippableObject.transform.localScale.z);
+        hookJoint.linearLimit = new SoftJointLimit{
+            limit = Vector3.Distance(transform.position, grippableObjectPoint),
+            bounciness = 0,
+            contactDistance = 0
+            };
+        hookJoint.xMotion = ConfigurableJointMotion.Limited;
+        hookJoint.yMotion = ConfigurableJointMotion.Limited;
+        hookJoint.zMotion = ConfigurableJointMotion.Limited;
+        if (visualHookCor != null)
+            StopCoroutine(visualHookCor);
+        visualHookCor = StartCoroutine(HookCoroutine(true, grippableObjectPoint));
     }
 
     public void ReleaseGrapple()
     {
         if (blockGameInputs) return;
+
+        isGripped = false;
+        hookJoint.connectedBody = null;
+        hookJoint.xMotion = ConfigurableJointMotion.Free;
+        hookJoint.yMotion = ConfigurableJointMotion.Free;
+        hookJoint.zMotion = ConfigurableJointMotion.Free;
+        if (visualHookCor != null)
+            StopCoroutine(visualHookCor);
+        visualHookCor = StartCoroutine(HookCoroutine(false, grippableObjectPoint));
+    }
+
+    IEnumerator HookCoroutine(bool hooking, Vector3 point)
+    {
+        if (hooking)
+            hookRenderer.enabled = true;
+        float timeElapsed = 0;
+        if (hooking)
+            timeElapsed = hookRenderer.GetPosition(1).magnitude;
+        else
+            timeElapsed = Vector3.Distance(hookRenderer.GetPosition(1), point - transform.position);
+
+        timeElapsed = timeElapsed / Vector3.Distance(point, transform.position) / hookTime;
+        while (timeElapsed < hookTime)
+        {
+            hookRenderer.SetPosition(1, Vector3.Lerp(Vector3.zero, point - transform.position, hooking ? timeElapsed/hookTime : 1 - timeElapsed/hookTime));
+            timeElapsed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        hookRenderer.SetPosition(1, hooking ? point - transform.position : Vector3.zero);
+        if (!hooking)
+            hookRenderer.enabled = false;
+        visualHookCor = null;
     }
 
     public void Boost()
     {
-        if (blockGameInputs) return;
+
+    }
+
+    bool CheckForGrippableObject(out GrippableObject gripObject, out Vector3 gripPoint)
+    {
+        planes = GeometryUtility.CalculateFrustumPlanes(playerCamera);
+        float minDist = float.MaxValue;
+        gripObject = null;
+        gripPoint = Vector3.zero;
+        foreach (GrippableObject grip in grippableColliders)
+        {
+            Vector3 preferredPoint = grip.GetPreferredGrabPoint(transform);
+            if (GeometryUtility.TestPlanesAABB(planes, grip.bounds) && grip.IsGrippable(transform, preferredPoint))
+            {
+                float d = Vector3.Distance(transform.position, preferredPoint);
+                if (minDist > d)
+                {
+                    minDist = d;
+                    gripObject = grip;
+                    gripPoint = preferredPoint;
+                }
+            }
+        }
+        return minDist != float.MaxValue;
     }
 
     //Start the game
@@ -205,6 +291,12 @@ public class PlayerControls : MonoBehaviour
     {
         if (blockGameInputs) return;
         Respawn(checkpoint, keepVel);
+    }
+
+    public void TryReset()
+    {
+        if (blockGameInputs) return;
+        LevelManager.instance.ResetLevel(this);
     }
 
     public void Respawn(Checkpoint checkpoint, bool keepVel)
