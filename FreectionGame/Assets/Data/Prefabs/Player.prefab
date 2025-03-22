@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 183481235271714745}
   - component: {fileID: 6586555211333889044}
   - component: {fileID: 937838787456106174}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,8 +33,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2124272882771266168}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6524529122640006338
@@ -102,6 +101,12 @@ MonoBehaviour:
   moveSpeed: 1000
   bounceMat: {fileID: 13400000, guid: b762f93aa7a48f649b9c67d90f554440, type: 2}
   nofrictionMat: {fileID: 13400000, guid: 7b66b86e66429a44bb8c4402c50dc0a2, type: 2}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 55
+  jumpDelay: 0
+  jumpStrength: 0
+  isGrounded: 0
 --- !u!135 &6586555211333889044
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -150,65 +155,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!1001 &1767049285209611655
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 5414109503983297805}
-    m_Modifications:
-    - target: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5861804098524127918, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-      propertyPath: m_Name
-      value: Player FreeLook Camera
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
---- !u!4 &2124272882771266168 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 432133465422780415, guid: 5a0883f04eb265944bcfbce580051b3f, type: 3}
-  m_PrefabInstance: {fileID: 1767049285209611655}
-  m_PrefabAsset: {fileID: 0}
