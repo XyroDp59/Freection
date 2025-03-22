@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6809890672345605756}
   - component: {fileID: 1162918060910185964}
   - component: {fileID: 8149356476235192528}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Checkpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,8 +52,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 0}
   velocity: {x: 0, y: 0, z: 0}
+  cameraPosition: {x: 0, y: 0, z: 0}
+  cameraRotation: {x: 0, y: 0, z: 0, w: 0}
   inactiveMaterial: {fileID: 2100000, guid: 741b93e4ecdf07a4e8f96a76eb91c063, type: 2}
   activeMaterial: {fileID: 2100000, guid: afabe3e34b576f84fb802b7df6f77eda, type: 2}
 --- !u!65 &8149356476235192528
@@ -88,7 +89,7 @@ GameObject:
   - component: {fileID: 1684276370861493773}
   - component: {fileID: 3302930332098191551}
   - component: {fileID: 4838696935820806069}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2739850144425360056}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RespawnAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

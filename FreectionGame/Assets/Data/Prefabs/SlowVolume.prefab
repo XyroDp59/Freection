@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 965931546862120642}
   - component: {fileID: 8586167067576543214}
   - component: {fileID: 7905473785510226063}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SlowVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}

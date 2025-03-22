@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6179508587525205106}
   - component: {fileID: 2445053830726110924}
   - component: {fileID: 7536270090282028331}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Blackhole
   m_TagString: Untagged
   m_Icon: {fileID: 0}

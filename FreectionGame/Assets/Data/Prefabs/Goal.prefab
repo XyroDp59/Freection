@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5477923612003259565}
   - component: {fileID: 5976279931137260468}
   - component: {fileID: 7110608758248823993}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3328983401210095140}
   - component: {fileID: 794601045725591192}
   - component: {fileID: 6182653958756094495}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 1874972779977020890}
   - component: {fileID: 4509938104777280076}
   - component: {fileID: 8459796400895547186}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 7971912227312312262}
   - component: {fileID: 4584441999708042711}
   - component: {fileID: 8423360865947983457}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GoalCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
