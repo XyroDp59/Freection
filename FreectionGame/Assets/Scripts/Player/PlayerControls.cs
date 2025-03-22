@@ -25,13 +25,16 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float jumpDelay;
     [SerializeField] float jumpStrength;
-    [Header("Visuals")]
+    [Header("Player Visuals")]
     [SerializeField] AnimationCurve bounceDeformCurve;
     [SerializeField] TrailRenderer trailRenderer;
     [SerializeField] AnimationCurve trailLengthPerSpeedCurve;
     [SerializeField] float trailCurveLog;
     [SerializeField] float trailStartOffset;
     [SerializeField] float trailLengthLerp;
+    [Header("Ground Visuals")]
+    [SerializeField] Material groundMaterial;
+    [SerializeField] float switchTextureDuration = 0.5f;
     [Header("Grappling Hook")]
     [HideInInspector] public List<GrippableObject> grippableColliders;
     [SerializeField] LineRenderer hookRenderer;
@@ -150,6 +153,8 @@ public class PlayerControls : MonoBehaviour
         if (!blockGameInputs) rb.AddForce(realMove, ForceMode.Force);
     }
 
+    #region Jump
+
     public void Jump()
     {
         if (blockGameInputs || !canJump || !isGrounded) return;
@@ -168,13 +173,47 @@ public class PlayerControls : MonoBehaviour
         canJump = true;
     }
 
+    IEnumerator DeformBallCoroutine(Vector3 deformForce)
+    {
+        float timeElapsed = 0f;
+        while (timeElapsed < bounceDeformCurve.keys[bounceDeformCurve.keys.Length - 1].time)
+        {
+            deformTransform.localScale = Vector3.one - deformForce * bounceDeformCurve.Evaluate(timeElapsed);
+            deformTransform.localPosition = -deformForce * bounceDeformCurve.Evaluate(timeElapsed);
+            timeElapsed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        deformTransform.localScale = Vector3.one;
+    }
+
+    #endregion
+
+    #region Switch bounce and slippery
+
     public void SwitchBounce(bool nowBouncing)
     {
         if (blockGameInputs) return;
 
         sphereCollider.material = nowBouncing ? bounceMat : nofrictionMat;
         isBouncing = nowBouncing;
+
+        StartCoroutine(SwitchTextureCoroutine(!nowBouncing));
     }
+
+    IEnumerator SwitchTextureCoroutine(bool bounceToSlippery)
+    {
+        float t = 0;
+        while (t < switchTextureDuration)
+        {
+            yield return null;
+            t += Time.deltaTime;
+            groundMaterial.SetFloat("_BounceToSlipperyCoeff", (bounceToSlippery ? t/switchTextureDuration : (1 - t / switchTextureDuration) ));
+        }
+        groundMaterial.SetFloat("_BounceToSlipperyCoeff", (bounceToSlippery ? 1 : 0));
+
+    }
+    #endregion
+
 
     void OnCollisionEnter(Collision collision)
     {
@@ -186,19 +225,7 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    IEnumerator DeformBallCoroutine(Vector3 deformForce)
-    {
-        float timeElapsed = 0f;
-        while (timeElapsed < bounceDeformCurve.keys[bounceDeformCurve.keys.Length-1].time)
-        {
-            deformTransform.localScale = Vector3.one - deformForce * bounceDeformCurve.Evaluate(timeElapsed);
-            deformTransform.localPosition = -deformForce * bounceDeformCurve.Evaluate(timeElapsed);
-            timeElapsed += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-        deformTransform.localScale = Vector3.one;
-    }
-
+    #region Grapple
     public void UseGrapple()
     {
         if (grippableObject == null || blockGameInputs) return;
@@ -258,10 +285,7 @@ public class PlayerControls : MonoBehaviour
         visualHookCor = null;
     }
 
-    public void Boost()
-    {
 
-    }
 
     bool CheckForGrippableObject(out GrippableObject gripObject, out Vector3 gripPoint)
     {
@@ -294,6 +318,15 @@ public class PlayerControls : MonoBehaviour
         return minDist != float.MaxValue;
     }
 
+    #endregion
+
+    public void Boost()
+    {
+
+    }
+
+    #region line renderer
+
     void AddOutlineMat(GrippableObject grip)
     {
         List<Material> mats = new List<Material>();
@@ -309,7 +342,9 @@ public class PlayerControls : MonoBehaviour
         mats.RemoveAt(mats.Count-1);
         grip.rend.SetMaterials(mats);
     }
+    #endregion
 
+    #region Spawn et restart
     //Start the game
     public void Spawn()
     {
@@ -364,10 +399,14 @@ public class PlayerControls : MonoBehaviour
         onRespawn.Invoke();
     }
 
+    #endregion
+
     public void OpenPauseMenu()
     {
 
     }
+
+    #region Death
 
     public bool IsDying()
     {
@@ -393,4 +432,5 @@ public class PlayerControls : MonoBehaviour
         onDeathEnd.Invoke();
         inputs.Enable();
     }
+    #endregion
 }
