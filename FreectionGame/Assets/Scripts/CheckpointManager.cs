@@ -9,7 +9,6 @@ public class CheckpointManager : MonoBehaviour
     [NonSerialized]
     public List<Checkpoint> checkpoints = new List<Checkpoint>();
 
-    [NonSerialized]
     public Checkpoint spawnPoint = null;
     [NonSerialized]
     public Checkpoint currentCheckpoint = null;
@@ -31,6 +30,5 @@ public class CheckpointManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentCheckpoint = checkpoints[0];
     }
 }

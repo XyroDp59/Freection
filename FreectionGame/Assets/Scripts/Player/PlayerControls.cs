@@ -59,7 +59,7 @@ public class PlayerControls : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Spawn();
     }
 
     // Update is called once per frame
@@ -91,10 +91,11 @@ public class PlayerControls : MonoBehaviour
 
     }
 
-    public void Spawn(Checkpoint spawnPoint)
+    public void Spawn()
     {
-        CheckpointManager.instance.spawnPoint = spawnPoint;
-        CheckpointManager.instance.currentCheckpoint = spawnPoint;
+        Checkpoint spawn = CheckpointManager.instance.spawnPoint;
+        CheckpointManager.instance.currentCheckpoint = spawn;
+        transform.SetPositionAndRotation(spawn.respawnAnchor.transform.position, spawn.respawnAnchor.transform.rotation);
 
         onSpawn.Invoke();
     }
