@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -10,8 +12,10 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] PhysicMaterial nofrictionMat;
 
 
-    Rigidbody rb;
+    public Rigidbody rb;
     SphereCollider sphereCollider;
+
+    Coroutine isDying = null;
 
     Inputs inputs;
     InputAction moveAction;
@@ -21,6 +25,10 @@ public class PlayerControls : MonoBehaviour
     InputAction resetCheckpointAction;
     InputAction resetLevelAction;
     InputAction pauseMenuAction;
+
+    public UnityEvent onSpawn;
+    public UnityEvent onRespawn;
+    public UnityEvent onDeath;
 
     void Awake()
     {
@@ -41,8 +49,8 @@ public class PlayerControls : MonoBehaviour
         grappleAction.performed += (_) => UseGrapple();
         grappleAction.canceled += (_) => ReleaseGrapple();
         boostAction.performed += (_) => Boost();
-        resetCheckpointAction.performed += (_) => ResetPlayer(false, false);
-        resetLevelAction.performed += (_) => ResetPlayer(true, false);
+        resetCheckpointAction.performed += (_) => Respawn(CheckpointManager.instance.currentCheckpoint, false);
+        resetLevelAction.performed += (_) => Respawn(CheckpointManager.instance.spawnPoint, false);
         pauseMenuAction.performed += (_) => OpenPauseMenu();
 
         inputs.Enable();
@@ -83,9 +91,28 @@ public class PlayerControls : MonoBehaviour
 
     }
 
-    public void ResetPlayer(bool firstCheckpoint, bool keepVel)
+    public void Spawn(Checkpoint spawnPoint)
     {
+        CheckpointManager.instance.spawnPoint = spawnPoint;
+        CheckpointManager.instance.currentCheckpoint = spawnPoint;
 
+        onSpawn.Invoke();
+    }
+
+    public void Respawn(Checkpoint checkpoint, bool keepVel)
+    {
+        transform.SetPositionAndRotation(checkpoint.respawnAnchor.transform.position, checkpoint.respawnAnchor.transform.rotation);
+
+        if (keepVel)
+        {
+            rb.velocity = checkpoint.velocity;
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
+
+        onRespawn.Invoke();
     }
 
     public void OpenPauseMenu()
@@ -93,4 +120,18 @@ public class PlayerControls : MonoBehaviour
 
     }
 
+    public void Die()
+    {
+        if (isDying != null) return;
+        isDying = StartCoroutine(PlayDeathAnimation());
+        onDeath.Invoke();
+    }
+
+    private IEnumerator PlayDeathAnimation()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        Respawn(CheckpointManager.instance.currentCheckpoint, false);
+        isDying = null;
+    }
 }
