@@ -6,7 +6,10 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public string levelSceneName;
-    public float bestTime;
+    public float bestTime = float.MaxValue;
+    public List<CheckpointTime> checkpointTimesOnPB;
+
     public Texture2D thumbnail;
-    public bool unlocked;
+    public bool unlocked = true;
+    public bool isWon = false;
 }

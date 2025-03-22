@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +81,7 @@ public class PlayerControls : MonoBehaviour
         grappleAction.canceled += (_) => ReleaseGrapple();
         boostAction.performed += (_) => Boost();
         resetCheckpointAction.performed += (_) => Respawn(CheckpointManager.instance.currentCheckpoint, false);
-        resetLevelAction.performed += (_) => Respawn(CheckpointManager.instance.spawnPoint, false);
+        resetLevelAction.performed += (_) => LevelManager.instance.ResetLevel(this);
         pauseMenuAction.performed += (_) => OpenPauseMenu();
 
         inputs.Enable();
@@ -179,17 +180,26 @@ public class PlayerControls : MonoBehaviour
 
     }
 
+    //Start the game
     public void Spawn()
     {
         Checkpoint spawn = CheckpointManager.instance.spawnPoint;
         CheckpointManager.instance.currentCheckpoint = spawn;
         transform.SetPositionAndRotation(spawn.respawnAnchor.transform.position, spawn.respawnAnchor.transform.rotation);
 
+        TimerManager.instance.StartTimer();
+
         onSpawn.Invoke();
     }
 
     public void Respawn(Checkpoint checkpoint, bool keepVel)
     {
+        if (checkpoint == CheckpointManager.instance.spawnPoint) //Reset game
+        {
+            CheckpointManager.instance.currentCheckpoint = checkpoint;
+            TimerManager.instance.ResetTimer();
+        }
+
         transform.SetPositionAndRotation(checkpoint.respawnAnchor.transform.position, checkpoint.respawnAnchor.transform.rotation);
 
         if (keepVel)

@@ -20,6 +20,8 @@ public class Checkpoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        onReachCheckpoint.AddListener(() => TimerManager.instance.ReachCheckpoint(this));
+
         CheckpointManager.instance.checkpoints.Add(this);
     }
 

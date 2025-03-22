@@ -19,6 +19,9 @@ public class Goal : MonoBehaviour
         if (hasFinished) return;
         hasFinished = true;
 
+        TimerManager.instance.StopTimer();
+        LevelManager.instance.WinLevel();
+
         onFinish.Invoke();
     }
 
