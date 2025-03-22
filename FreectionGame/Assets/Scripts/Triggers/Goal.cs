@@ -17,9 +17,7 @@ public class Goal : MonoBehaviour
     public void Finish()
     {
         if (hasFinished) return;
-        hasFinished = true;
 
-        TimerManager.instance.StopTimer();
         LevelManager.instance.WinLevel();
 
         onFinish.Invoke();
@@ -28,7 +26,7 @@ public class Goal : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         PlayerControls player = other.GetComponent<PlayerControls>();
-        if (player != null)
+        if (player != null && !player.IsDying())
         {
             Finish();
         }

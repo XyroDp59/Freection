@@ -48,7 +48,7 @@ public class TimerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadTimes(LevelManager.instance.currentLevel.levelSceneName);
+        LoadTimes();
 
         gameTimerText = gameTimer.GetComponentInChildren<TextMeshProUGUI>();
         checkpointTimerText = checkpointTimer.GetComponentInChildren<TextMeshProUGUI>();
@@ -87,7 +87,7 @@ public class TimerManager : MonoBehaviour
         gameTime = 0.0f;
         gameTimerText.text = TimeToString(gameTime);
 
-        LevelData currentLevel = LevelManager.instance.currentLevel;
+        SerializedLevelData currentLevel = LevelManager.instance.currentLevelData;
         if (!currentLevel.isWon)
         {
             previousCheckpointTimes = checkpointTimes;
@@ -141,11 +141,11 @@ public class TimerManager : MonoBehaviour
         checkpointTimes.Clear();
     }
 
-    public void StoreTimes(string levelName) // When exiting level
+    public void StoreTimes() // When exiting level
     {
         RefreshCheckpointTimes();
 
-        LevelData currentLevel = LevelManager.instance.currentLevel;
+        SerializedLevelData currentLevel = LevelManager.instance.currentLevelData;
 
         if (currentLevel.bestTime > bestTime)
         {
@@ -154,9 +154,10 @@ public class TimerManager : MonoBehaviour
         }
     }
 
-    public void LoadTimes(string levelName)
+    public void LoadTimes()
     {
-        LevelData currentLevel = LevelManager.instance.currentLevel;
+        if (LevelManager.instance == null) return;
+        SerializedLevelData currentLevel = LevelManager.instance.currentLevelData;
 
         bestTime = currentLevel.bestTime;
         previousCheckpointTimes = currentLevel.checkpointTimesOnPB;

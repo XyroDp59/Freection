@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public List<LevelData> levels;
-    public LevelData currentLevel;
-    bool hasWon = false;
+    [NonSerialized]
+    public SerializedLevelData currentLevelData = null;
 
     public static LevelManager instance;
 
@@ -26,39 +27,47 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        currentLevelData = null;
         LoadLevel(levels[0].levelSceneName);
     }
 
     public void LoadLevel(string levelName)
     {
-        if (currentLevel != null)
+        if (currentLevelData != null)
         {
             ExitLevel(false);
         }
 
+        Goal.hasFinished = false;
+
         LevelData newLevel = levels.Find(ld => ld.levelSceneName == levelName && ld.unlocked);
         if (newLevel != null) 
         {
-            currentLevel = newLevel;
+            SerializedLevelData newLevelData = SerializedLevelData.LoadLevelData(levelName);
+            currentLevelData = newLevelData;
             SceneManager.LoadScene(levelName);
         }
     }
 
     public void ResetLevel(PlayerControls player)
     {
-        if (hasWon)
+        if (Goal.hasFinished)
         {
             TimerManager.instance.RefreshCheckpointTimes();
+            GameUI.instance.ShowEndScreen(false);
+            PlayerControls.Instance.blockGameInputs = false;
+            Goal.hasFinished = false;
         }
+
         player.Respawn(CheckpointManager.instance.spawnPoint, false);
-        hasWon = false;
     }
 
     public void ExitLevel(bool toMainMenu)
     {
-        if (currentLevel == null) return;
+        if (currentLevelData == null) return;
 
-        TimerManager.instance.StoreTimes(currentLevel.levelSceneName);
+        TimerManager.instance.StoreTimes();
+        SerializedLevelData.SaveLevelData(currentLevelData.levelSceneName, currentLevelData);
 
         if (toMainMenu)
         {
@@ -68,7 +77,10 @@ public class LevelManager : MonoBehaviour
 
     public void WinLevel()
     {
-        hasWon = true;
-        currentLevel.isWon = true;
+        Goal.hasFinished = true;
+        if (!currentLevelData.isWon) currentLevelData.isWon = true;
+        PlayerControls.Instance.blockGameInputs = true;
+        TimerManager.instance.StopTimer();
+        GameUI.instance.ShowEndScreen(true);
     }
 }

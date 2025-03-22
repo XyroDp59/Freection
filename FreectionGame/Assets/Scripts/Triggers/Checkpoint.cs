@@ -30,7 +30,7 @@ public class Checkpoint : MonoBehaviour
         if (CheckpointManager.instance.currentCheckpoint == this) return;
 
         PlayerControls player = other.GetComponent<PlayerControls>();
-        if (player == null) return;
+        if (player == null || player.blockGameInputs) return;
 
         if (CheckpointManager.instance.currentCheckpoint == null)
         {

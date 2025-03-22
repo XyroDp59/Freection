@@ -55,6 +55,7 @@ public class PlayerControls : MonoBehaviour
     public bool isGrounded;
     bool canJump;
     bool isBouncing;
+    public bool blockGameInputs = false;
 
     void Awake()
     {
@@ -83,7 +84,7 @@ public class PlayerControls : MonoBehaviour
         grappleAction.performed += (_) => UseGrapple();
         grappleAction.canceled += (_) => ReleaseGrapple();
         boostAction.performed += (_) => Boost();
-        resetCheckpointAction.performed += (_) => Respawn(CheckpointManager.instance.currentCheckpoint, false);
+        resetCheckpointAction.performed += (_) => TryRespawn(CheckpointManager.instance.currentCheckpoint, false);
         resetLevelAction.performed += (_) => LevelManager.instance.ResetLevel(this);
         pauseMenuAction.performed += (_) => OpenPauseMenu();
 
@@ -120,12 +121,12 @@ public class PlayerControls : MonoBehaviour
         trailRenderer.time = Mathf.Lerp(trailRenderer.time, Mathf.Max(trailLengthPerSpeedCurve.Evaluate(Mathf.Log(rb.velocity.magnitude, trailCurveLog)) - trailStartOffset, 0), trailLengthLerp);
         trailRenderer.enabled = (trailLengthPerSpeedCurve.Evaluate(Mathf.Log(rb.velocity.magnitude, trailCurveLog)) - trailStartOffset) > 0;
 
-        rb.AddForce(realMove, ForceMode.Force);
+        if (!blockGameInputs) rb.AddForce(realMove, ForceMode.Force);
     }
 
     public void Jump()
     {
-        if (!canJump || !isGrounded) return;
+        if (blockGameInputs || !canJump || !isGrounded) return;
 
         canJump = false;
         rb.AddForce(jumpStrength * Vector3.up);
@@ -143,6 +144,8 @@ public class PlayerControls : MonoBehaviour
 
     public void SwitchBounce(bool nowBouncing)
     {
+        if (blockGameInputs) return;
+
         sphereCollider.material = nowBouncing ? bounceMat : nofrictionMat;
         isBouncing = nowBouncing;
     }
@@ -173,17 +176,17 @@ public class PlayerControls : MonoBehaviour
 
     public void UseGrapple()
     {
-
+        if (blockGameInputs) return;
     }
 
     public void ReleaseGrapple()
     {
-
+        if (blockGameInputs) return;
     }
 
     public void Boost()
     {
-
+        if (blockGameInputs) return;
     }
 
     //Start the game
@@ -196,6 +199,12 @@ public class PlayerControls : MonoBehaviour
         TimerManager.instance.StartTimer();
 
         onSpawn.Invoke();
+    }
+
+    public void TryRespawn(Checkpoint checkpoint, bool keepVel)
+    {
+        if (blockGameInputs) return;
+        Respawn(checkpoint, keepVel);
     }
 
     public void Respawn(Checkpoint checkpoint, bool keepVel)
@@ -225,9 +234,14 @@ public class PlayerControls : MonoBehaviour
 
     }
 
+    public bool IsDying()
+    {
+        return isDying != null;
+    }
+
     public void Die()
     {
-        if (isDying != null) return;
+        if (IsDying()) return;
         isDying = StartCoroutine(PlayDeathAnimation());
     }
 

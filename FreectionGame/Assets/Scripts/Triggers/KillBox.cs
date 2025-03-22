@@ -7,7 +7,7 @@ public class KillBox : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         PlayerControls player = other.GetComponent<PlayerControls>();
-        if (player != null )
+        if (player != null && !player.blockGameInputs)
         {
             player.Die();
         }

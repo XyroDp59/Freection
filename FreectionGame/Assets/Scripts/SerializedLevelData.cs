@@ -16,8 +16,19 @@ public class SerializedLevelData
 
     public static SerializedLevelData LoadLevelData(string levelName)
     {
-        string json = PlayerPrefs.GetString(levelName);
-        return JsonUtility.FromJson<SerializedLevelData>(json);
+        if (PlayerPrefs.HasKey(levelName))
+        {
+            string json = PlayerPrefs.GetString(levelName);
+            return JsonUtility.FromJson<SerializedLevelData>(json);
+        }
+        else
+        {
+            SerializedLevelData newLevelData = new SerializedLevelData();
+            newLevelData.levelSceneName = levelName;
+            newLevelData.bestTime = float.MaxValue;
+
+            return newLevelData;
+        }
     }
 
     public static void SaveLevelData(string levelName, SerializedLevelData levelData)
