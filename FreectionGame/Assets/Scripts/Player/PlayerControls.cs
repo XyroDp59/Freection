@@ -25,8 +25,11 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] float jumpStrength;
     [Header("Visuals")]
     [SerializeField] AnimationCurve bounceDeformCurve;
-    [SerializeField] AnimationCurve jumpDeformCurve;
-
+    [SerializeField] TrailRenderer trailRenderer;
+    [SerializeField] AnimationCurve trailLengthPerSpeedCurve;
+    [SerializeField] float trailCurveLog;
+    [SerializeField] float trailStartOffset;
+    [SerializeField] float trailLengthLerp;
 
     public Rigidbody rb;
 
@@ -112,6 +115,9 @@ public class PlayerControls : MonoBehaviour
         Vector2 velAxis = Vector2.Perpendicular(new Vector2(rb.velocity.x, rb.velocity.z)).normalized;
 
         visualSphere.Rotate(new Vector3(-velAxis.x, 0, -velAxis.y), rb.velocity.magnitude * Time.deltaTime * 50f, Space.World);
+
+        trailRenderer.time = Mathf.Lerp(trailRenderer.time, Mathf.Max(trailLengthPerSpeedCurve.Evaluate(Mathf.Log(rb.velocity.magnitude, trailCurveLog)) - trailStartOffset, 0), trailLengthLerp);
+        trailRenderer.enabled = (trailLengthPerSpeedCurve.Evaluate(Mathf.Log(rb.velocity.magnitude, trailCurveLog)) - trailStartOffset) > 0;
 
         rb.AddForce(realMove, ForceMode.Force);
     }
