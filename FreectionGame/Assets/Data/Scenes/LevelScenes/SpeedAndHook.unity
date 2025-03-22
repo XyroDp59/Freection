@@ -1594,7 +1594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookInsideDist: 0.5
-  maxDistance: 50
+  maxDistance: 75
   minDistance: 0
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -2178,7 +2178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookInsideDist: 0.5
-  maxDistance: 50
+  maxDistance: 75
   minDistance: 0
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -2436,7 +2436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookInsideDist: 0.5
-  maxDistance: 50
+  maxDistance: 75
   minDistance: 0
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -2663,7 +2663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookInsideDist: 0.5
-  maxDistance: 50
+  maxDistance: 75
   minDistance: 0
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -4222,7 +4222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookInsideDist: 0.5
-  maxDistance: 50
+  maxDistance: 75
   minDistance: 0
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
