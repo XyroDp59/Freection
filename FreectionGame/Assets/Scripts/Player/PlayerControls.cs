@@ -36,6 +36,7 @@ public class PlayerControls : MonoBehaviour
     public List<GrippableObject> grippableColliders;
     [SerializeField] LineRenderer hookRenderer;
     [SerializeField] float hookTime;
+    [SerializeField] Material outlineMat;
 
     public Rigidbody rb;
 
@@ -220,6 +221,7 @@ public class PlayerControls : MonoBehaviour
         hookJoint.xMotion = ConfigurableJointMotion.Free;
         hookJoint.yMotion = ConfigurableJointMotion.Free;
         hookJoint.zMotion = ConfigurableJointMotion.Free;
+
         if (visualHookCor != null)
             StopCoroutine(visualHookCor);
         visualHookCor = StartCoroutine(HookCoroutine(false, grippableObjectPoint));
@@ -256,6 +258,7 @@ public class PlayerControls : MonoBehaviour
     bool CheckForGrippableObject(out GrippableObject gripObject, out Vector3 gripPoint)
     {
         planes = GeometryUtility.CalculateFrustumPlanes(playerCamera);
+        GrippableObject oldGrip = grippableObject;
         float minDist = float.MaxValue;
         gripObject = null;
         gripPoint = Vector3.zero;
@@ -273,7 +276,30 @@ public class PlayerControls : MonoBehaviour
                 }
             }
         }
+        if (oldGrip != gripObject)
+        {
+            if (oldGrip != null)
+                RemoveOutlineMat(oldGrip);
+            if (gripObject != null)
+                AddOutlineMat(gripObject);
+        }
         return minDist != float.MaxValue;
+    }
+
+    void AddOutlineMat(GrippableObject grip)
+    {
+        List<Material> mats = new List<Material>();
+        grip.rend.GetMaterials(mats);
+        mats.Add(outlineMat);
+        grip.rend.SetMaterials(mats);
+    }
+
+    void RemoveOutlineMat(GrippableObject grip)
+    {
+        List<Material> mats = new List<Material>();
+        grip.rend.GetMaterials(mats);
+        mats.RemoveAt(mats.Count-1);
+        grip.rend.SetMaterials(mats);
     }
 
     //Start the game
