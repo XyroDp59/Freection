@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
+    public static PlayerControls Instance;
+
     [SerializeField] float moveSpeed;
     [SerializeField] PhysicMaterial bounceMat;
     [SerializeField] PhysicMaterial nofrictionMat;
@@ -24,6 +26,11 @@ public class PlayerControls : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null)
+            Destroy(gameObject);
+
+        Instance = this;
+
         rb = GetComponent<Rigidbody>();
         sphereCollider = GetComponent<SphereCollider>();
 
