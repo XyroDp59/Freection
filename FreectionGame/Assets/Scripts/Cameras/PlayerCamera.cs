@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class PlayerCamera : MonoBehaviour
@@ -10,10 +11,20 @@ public class PlayerCamera : MonoBehaviour
     public static PlayerCamera Instance { get; private set; }
     private CinemachineFreeLook freeLook;
     [Header("Zoom")]
-    [SerializeField] private float minZoomFOV = 12f;
-    [SerializeField] private float maxZoomFOV = 70f;
-    [SerializeField] private AnimationCurve curveZoomFOV;
-    private float zoomFOV = 30f;
+    [SerializeField] private float minZoom = 1f;
+    [SerializeField] private float maxZoom = 15f;
+    [SerializeField] private float zoomSpeed = 5f;
+    private float wantedZoom = 5f;
+    private float currentZoom = 5f;
+    [SerializeField] private float baseBotHeight;
+    [SerializeField] private float baseBotRad;
+    [SerializeField] private float baseMidHeight;
+    [SerializeField] private float baseMidRad;
+    [SerializeField] private float baseTopHeight;
+    [SerializeField] private float baseTopRad;
+
+    private Inputs inputs;
+    InputAction zoomAction;
 
     private void Awake()
     {
@@ -21,6 +32,10 @@ public class PlayerCamera : MonoBehaviour
         else Destroy(Instance);
 
         freeLook = GetComponent<CinemachineFreeLook>();
+
+        inputs = new Inputs();
+        zoomAction = inputs.Player.Zoom;
+        inputs.Enable();
     }
 
     public void SetCamPosition(Vector3 position)
@@ -29,11 +44,23 @@ public class PlayerCamera : MonoBehaviour
         freeLook.ForceCameraPosition(position, rotation);
     }
 
-    public void SetCamZoom(float t)
+    private void Update() {
+        
+        float zoomDelta = zoomAction.ReadValue<float>();
+
+        wantedZoom = Mathf.Clamp(wantedZoom + zoomDelta * Time.deltaTime * zoomSpeed, minZoom, maxZoom);
+        currentZoom = Mathf.Lerp(currentZoom, wantedZoom, 0.05f);
+
+        SetCamZoom();
+    }
+
+    public void SetCamZoom()
     {
-        t = 1 - t;
-        t = Mathf.Clamp01(t);
-        zoomFOV = minZoomFOV + curveZoomFOV.Evaluate(t) * (maxZoomFOV - minZoomFOV);
-        freeLook.m_Lens.FieldOfView = zoomFOV;
+        freeLook.m_Orbits[0].m_Height = baseBotHeight * currentZoom;
+        freeLook.m_Orbits[0].m_Radius = baseBotRad * currentZoom;
+        freeLook.m_Orbits[1].m_Height = baseMidHeight * currentZoom;
+        freeLook.m_Orbits[1].m_Radius = baseMidRad * currentZoom;
+        freeLook.m_Orbits[2].m_Height = baseTopHeight * currentZoom;
+        freeLook.m_Orbits[2].m_Radius = baseTopRad * currentZoom;
     }
 }
