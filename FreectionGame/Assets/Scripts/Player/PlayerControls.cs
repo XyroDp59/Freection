@@ -312,7 +312,7 @@ public class PlayerControls : MonoBehaviour
     {
         Checkpoint spawn = CheckpointManager.instance.spawnPoint;
         CheckpointManager.instance.currentCheckpoint = spawn;
-        transform.SetPositionAndRotation(spawn.respawnAnchor.transform.position, spawn.respawnAnchor.transform.rotation);
+        transform.parent.SetPositionAndRotation(spawn.respawnAnchor.transform.position, spawn.respawnAnchor.transform.rotation);
 
         TimerManager.instance.StartTimer();
 
@@ -341,13 +341,12 @@ public class PlayerControls : MonoBehaviour
 
         if (keepVel)
         {
-            transform.position = checkpoint.position;
-            transform.rotation= checkpoint.rotation;
+            transform.parent.SetPositionAndRotation(checkpoint.position, checkpoint.rotation);
             rb.velocity = checkpoint.velocity;
         }
         else
         {
-            transform.SetPositionAndRotation(checkpoint.respawnAnchor.transform.position, checkpoint.respawnAnchor.transform.rotation);
+            transform.parent.SetPositionAndRotation(checkpoint.respawnAnchor.transform.position, checkpoint.respawnAnchor.transform.rotation);
             rb.velocity = Vector3.zero;
         }
 
