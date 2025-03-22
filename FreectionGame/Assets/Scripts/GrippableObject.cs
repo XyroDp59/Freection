@@ -20,14 +20,11 @@ public class GrippableObject : MonoBehaviour
     public bool IsGrippable(Transform player, Vector3 point)
     {
         float distSphere = Vector3.Distance(player.position, point);
-        Debug.Log(distSphere);
-        Debug.DrawLine(player.position, point, distSphere > minDistance && distSphere < maxDistance ? Color.green : Color.red);
         return distSphere > minDistance && distSphere < maxDistance;
     }
 
     public Vector3 GetPreferredGrabPoint(Transform camera)
     {
-
         Ray ray = new Ray();
         ray.origin = camera.position;
         ray.direction = camera.forward;

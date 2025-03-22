@@ -107,6 +107,15 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""71a5b17f-e136-479f-8524-c34716252c75"",
+                    ""expectedControlType"": ""Analog"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -483,6 +492,72 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""action"": ""PauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""LeftTrigger/Shoulder [Gamepad]"",
+                    ""id"": ""473cb004-1e0a-4015-bd75-be6cc9238585"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""fd130ccc-d6a0-4169-9b02-cee967876cb5"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""a1ca4ba8-d59a-40b6-9744-c70cd5e7b8b3"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""MouseWheel"",
+                    ""id"": ""283737a7-b873-4e27-bda9-705bf4796187"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""3e58274c-9540-4c45-84b7-ceaaf6507520"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""4c71c1fd-f0d8-44ec-afd8-e814ce402c39"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1077,6 +1152,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Boost = m_Player.FindAction("Boost", throwIfNotFound: true);
         m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
+        m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1165,6 +1241,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Boost;
     private readonly InputAction m_Player_PauseMenu;
+    private readonly InputAction m_Player_Zoom;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
@@ -1178,6 +1255,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Boost => m_Wrapper.m_Player_Boost;
         public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
+        public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1214,6 +1292,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @PauseMenu.started += instance.OnPauseMenu;
             @PauseMenu.performed += instance.OnPauseMenu;
             @PauseMenu.canceled += instance.OnPauseMenu;
+            @Zoom.started += instance.OnZoom;
+            @Zoom.performed += instance.OnZoom;
+            @Zoom.canceled += instance.OnZoom;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1245,6 +1326,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @PauseMenu.started -= instance.OnPauseMenu;
             @PauseMenu.performed -= instance.OnPauseMenu;
             @PauseMenu.canceled -= instance.OnPauseMenu;
+            @Zoom.started -= instance.OnZoom;
+            @Zoom.performed -= instance.OnZoom;
+            @Zoom.canceled -= instance.OnZoom;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1436,6 +1520,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
