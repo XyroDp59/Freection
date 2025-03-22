@@ -19,7 +19,6 @@ public class FollowPlayerOnTrack : MonoBehaviour
         {
             _cam.gameObject.SetActive(true);
             PlayerCamera.Instance.gameObject.SetActive(false);
-            Debug.Log("bfuzogzouifhaio");
         }
     }
 

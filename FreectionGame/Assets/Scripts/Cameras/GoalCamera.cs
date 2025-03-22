@@ -17,6 +17,5 @@ public class GoalCamera : MonoBehaviour
     {
         PlayerCamera.Instance.gameObject.SetActive(false);
         gameObject.SetActive(true);
-        Debug.Log("bdofoqnf");
     }
 }
