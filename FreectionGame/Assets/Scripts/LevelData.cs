@@ -9,7 +9,7 @@ public class LevelData : ScriptableObject
     public float bestTime = float.MaxValue;
     public List<CheckpointTime> checkpointTimesOnPB;
 
-    public Texture2D thumbnail;
+    public Sprite thumbnail;
     public bool unlocked = true;
     public bool isWon = false;
 }

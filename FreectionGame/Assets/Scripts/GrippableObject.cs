@@ -8,7 +8,7 @@ public class GrippableObject : MonoBehaviour
     [SerializeField] float maxDistance;
     [SerializeField] float minDistance;
     private Collider col;
-    public Bounds bounds;
+    [HideInInspector] public Bounds bounds;
 
     void Awake()
     {

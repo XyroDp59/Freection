@@ -28,7 +28,6 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         currentLevelData = null;
-        LoadLevel(levels[0].levelSceneName);
     }
 
     public void LoadLevel(string levelName)
@@ -71,7 +70,7 @@ public class LevelManager : MonoBehaviour
 
         if (toMainMenu)
         {
-            //TODO : go to main menu
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
