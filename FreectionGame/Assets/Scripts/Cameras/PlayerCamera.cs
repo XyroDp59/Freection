@@ -1,10 +1,8 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -47,6 +45,11 @@ public class PlayerCamera : MonoBehaviour
     public void SetCamPosition(Vector3 position)
     {
         Quaternion rotation = Quaternion.identity;
+        freeLook.ForceCameraPosition(position, rotation);
+    }
+
+    public void SetCamTransform(Vector3 position, Quaternion rotation)
+    {
         freeLook.ForceCameraPosition(position, rotation);
     }
 

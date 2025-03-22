@@ -10,7 +10,7 @@ public class GoalCamera : MonoBehaviour
     private void Awake()
     {
         _virtualCamera = GetComponent<CinemachineVirtualCamera>();
-        _virtualCamera.LookAt = PlayerControls.Instance.transform;
+       
     }
 
     private void Start()
@@ -20,7 +20,18 @@ public class GoalCamera : MonoBehaviour
 
     public void ActivateGoalCamera(bool isActive)
     {
-        PlayerCamera.Instance.gameObject.SetActive(!isActive);
-        gameObject.SetActive(isActive);
+        if (isActive && !gameObject.activeSelf)
+        {
+            if (_virtualCamera == null) _virtualCamera = GetComponent<CinemachineVirtualCamera>();
+            _virtualCamera.LookAt = PlayerControls.Instance.transform;
+            PlayerCamera.Instance.gameObject.SetActive(false);
+            gameObject.SetActive(true);
+        }
+
+        if (!isActive && gameObject.activeSelf)
+        {
+            PlayerCamera.Instance.gameObject.SetActive(true);
+            gameObject.SetActive(false);
+        }
     }
 }

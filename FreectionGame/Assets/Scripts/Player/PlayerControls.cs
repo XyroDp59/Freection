@@ -74,7 +74,10 @@ public class PlayerControls : MonoBehaviour
     void Awake()
     {
         if (Instance != null)
+        {
             Destroy(gameObject);
+            return;
+        }
 
         Instance = this;
 
@@ -312,7 +315,12 @@ public class PlayerControls : MonoBehaviour
     {
         Checkpoint spawn = CheckpointManager.instance.spawnPoint;
         CheckpointManager.instance.currentCheckpoint = spawn;
-        transform.parent.SetPositionAndRotation(spawn.respawnAnchor.transform.position, spawn.respawnAnchor.transform.rotation);
+        transform.position = spawn.respawnAnchor.transform.position;
+
+        spawn.cameraPosition = spawn.respawnAnchor.transform.position;
+        spawn.cameraRotation = spawn.respawnAnchor.transform.rotation;
+
+        PlayerCamera.Instance.SetCamTransform(spawn.cameraPosition, spawn.cameraRotation);
 
         TimerManager.instance.StartTimer();
 
@@ -337,16 +345,19 @@ public class PlayerControls : MonoBehaviour
         {
             CheckpointManager.instance.currentCheckpoint = checkpoint;
             TimerManager.instance.ResetTimer();
+            onLevelReset.Invoke();
         }
+
+        PlayerCamera.Instance.SetCamTransform(checkpoint.cameraPosition, checkpoint.cameraRotation);
 
         if (keepVel)
         {
-            transform.parent.SetPositionAndRotation(checkpoint.position, checkpoint.rotation);
+            transform.position = checkpoint.position;
             rb.velocity = checkpoint.velocity;
         }
         else
         {
-            transform.parent.SetPositionAndRotation(checkpoint.respawnAnchor.transform.position, checkpoint.respawnAnchor.transform.rotation);
+            transform.position = checkpoint.respawnAnchor.transform.position;
             rb.velocity = Vector3.zero;
         }
 

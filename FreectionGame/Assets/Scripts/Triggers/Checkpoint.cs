@@ -14,8 +14,10 @@ public class Checkpoint : MonoBehaviour
     public UnityEvent onReachCheckpoint;
 
     public Vector3 position;
-    public Quaternion rotation;
     public Vector3 velocity;
+
+    public Vector3 cameraPosition;
+    public Quaternion cameraRotation;
 
     [SerializeField] Material inactiveMaterial;
     [SerializeField] Material activeMaterial;
@@ -43,8 +45,11 @@ public class Checkpoint : MonoBehaviour
         {
             CheckpointManager.instance.currentCheckpoint = this;
             position = player.transform.position;
-            rotation = player.transform.rotation;
             velocity = player.rb.velocity;
+
+            cameraPosition = Camera.main.transform.position;
+            cameraRotation = Camera.main.transform.rotation;
+
             onReachCheckpoint.Invoke();
         }
     }
