@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
+    [SerializeField] GameObject death;
     [SerializeField] GameObject endGame;
     [SerializeField] Button resetButton;
     [SerializeField] Button exitButton;
@@ -26,6 +27,9 @@ public class GameUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerControls.Instance.onDeathStart.AddListener(() => ShowDeathScreen(true));
+        PlayerControls.Instance.onDeathEnd.AddListener(() => ShowDeathScreen(false));
+
         resetButton.onClick.AddListener(() => LevelManager.instance.ResetLevel(PlayerControls.Instance));
         exitButton.onClick.AddListener(() => LevelManager.instance.ExitLevel(true));
     }
@@ -39,5 +43,10 @@ public class GameUI : MonoBehaviour
     public void ShowEndScreen(bool show)
     {
         endGame.SetActive(show);
+    }
+
+    public void ShowDeathScreen(bool show)
+    {
+        death.SetActive(show);
     }
 }

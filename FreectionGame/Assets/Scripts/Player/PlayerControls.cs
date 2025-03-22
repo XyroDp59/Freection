@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using static UnityEditor.FilePathAttribute;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -307,14 +308,15 @@ public class PlayerControls : MonoBehaviour
             TimerManager.instance.ResetTimer();
         }
 
-        transform.SetPositionAndRotation(checkpoint.respawnAnchor.transform.position, checkpoint.respawnAnchor.transform.rotation);
-
         if (keepVel)
         {
+            transform.position = checkpoint.position;
+            transform.rotation= checkpoint.rotation;
             rb.velocity = checkpoint.velocity;
         }
         else
         {
+            transform.SetPositionAndRotation(checkpoint.respawnAnchor.transform.position, checkpoint.respawnAnchor.transform.rotation);
             rb.velocity = Vector3.zero;
         }
 

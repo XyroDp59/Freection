@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class Checkpoint : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Checkpoint : MonoBehaviour
 
     public UnityEvent onReachCheckpoint;
 
+    public Vector3 position;
+    public Quaternion rotation;
     public Vector3 velocity;
 
     [SerializeField] Material inactiveMaterial;
@@ -39,6 +42,8 @@ public class Checkpoint : MonoBehaviour
         else if (CheckpointManager.instance.currentCheckpoint.order <= order)
         {
             CheckpointManager.instance.currentCheckpoint = this;
+            position = player.transform.position;
+            rotation = player.transform.rotation;
             velocity = player.rb.velocity;
             onReachCheckpoint.Invoke();
         }
