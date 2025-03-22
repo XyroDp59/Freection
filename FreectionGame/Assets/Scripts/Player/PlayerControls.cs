@@ -39,7 +39,8 @@ public class PlayerControls : MonoBehaviour
 
     public UnityEvent onSpawn;
     public UnityEvent onRespawn;
-    public UnityEvent onDeath;
+    public UnityEvent onDeathStart;
+    public UnityEvent onDeathEnd;
 
     public bool isGrounded;
     bool canJump;
@@ -177,14 +178,19 @@ public class PlayerControls : MonoBehaviour
     {
         if (isDying != null) return;
         isDying = StartCoroutine(PlayDeathAnimation());
-        onDeath.Invoke();
     }
 
     private IEnumerator PlayDeathAnimation()
     {
-        yield return new WaitForSeconds(2.0f);
+        inputs.Disable();
+        onDeathStart.Invoke();
+
+        yield return new WaitForSeconds(1.0f); //TODO : play animation
 
         Respawn(CheckpointManager.instance.currentCheckpoint, false);
         isDying = null;
+
+        onDeathEnd.Invoke();
+        inputs.Enable();
     }
 }
