@@ -20,7 +20,6 @@ public class GameUI : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 
