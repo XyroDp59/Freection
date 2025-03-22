@@ -166,7 +166,7 @@ public class TimerManager : MonoBehaviour
         previousCheckpointTimes = currentLevel.checkpointTimesOnPB;
     }
 
-    public string TimeToString(float time)
+    public static string TimeToString(float time)
     {
         int floor = Mathf.FloorToInt(time);
 
