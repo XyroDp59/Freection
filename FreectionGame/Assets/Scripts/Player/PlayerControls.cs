@@ -33,7 +33,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] float trailStartOffset;
     [SerializeField] float trailLengthLerp;
     [Header("Grappling Hook")]
-    public List<GrippableObject> grippableColliders;
+    [HideInInspector] public List<GrippableObject> grippableColliders;
     [SerializeField] LineRenderer hookRenderer;
     [SerializeField] float hookTime;
     [SerializeField] Material outlineMat;
@@ -272,7 +272,7 @@ public class PlayerControls : MonoBehaviour
         gripPoint = Vector3.zero;
         foreach (GrippableObject grip in grippableColliders)
         {
-            Vector3 preferredPoint = grip.GetPreferredGrabPoint(transform);
+            Vector3 preferredPoint = grip.GetPreferredGrabPoint(transform, playerCamera.transform);
             if (GeometryUtility.TestPlanesAABB(planes, grip.bounds) && grip.IsGrippable(transform, preferredPoint))
             {
                 float d = Vector3.Distance(transform.position, preferredPoint);

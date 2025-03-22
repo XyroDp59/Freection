@@ -30,12 +30,14 @@ public class GrippableObject : MonoBehaviour
         return distSphere > minDistance && distSphere < maxDistance;
     }
 
-    public Vector3 GetPreferredGrabPoint(Transform camera)
+    public Vector3 GetPreferredGrabPoint(Transform camera, Transform player)
     {
         Ray ray = new Ray();
         ray.origin = camera.position;
         ray.direction = camera.forward;
-        if (col.Raycast(ray, out var hit, maxDistance))
+
+        if (col.Raycast(ray, out var hit, maxDistance - Vector3.Dot(camera.forward, (player.position - camera.position).normalized)
+            * (player.position - camera.position).magnitude))
             return hit.point;
         else 
         {
