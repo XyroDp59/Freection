@@ -51,6 +51,8 @@ MonoBehaviour:
   onReachCheckpoint:
     m_PersistentCalls:
       m_Calls: []
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0, w: 0}
   velocity: {x: 0, y: 0, z: 0}
   inactiveMaterial: {fileID: 2100000, guid: 741b93e4ecdf07a4e8f96a76eb91c063, type: 2}
   activeMaterial: {fileID: 2100000, guid: afabe3e34b576f84fb802b7df6f77eda, type: 2}
@@ -64,7 +66,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

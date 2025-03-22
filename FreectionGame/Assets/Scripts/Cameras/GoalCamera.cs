@@ -13,9 +13,14 @@ public class GoalCamera : MonoBehaviour
         _virtualCamera.LookAt = PlayerControls.Instance.transform;
     }
 
-    public void ActivateGoalCamera()
+    private void Start()
     {
-        PlayerCamera.Instance.gameObject.SetActive(false);
-        gameObject.SetActive(true);
+        PlayerControls.Instance.onLevelReset.AddListener(() => ActivateGoalCamera(false));
+    }
+
+    public void ActivateGoalCamera(bool isActive)
+    {
+        PlayerCamera.Instance.gameObject.SetActive(!isActive);
+        gameObject.SetActive(isActive);
     }
 }

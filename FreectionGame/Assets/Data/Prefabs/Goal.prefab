@@ -74,6 +74,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  goalCamera: {fileID: 0}
 --- !u!65 &7110608758248823993
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -84,7 +85,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

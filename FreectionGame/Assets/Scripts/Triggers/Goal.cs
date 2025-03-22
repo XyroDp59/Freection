@@ -8,6 +8,8 @@ public class Goal : MonoBehaviour
     public static bool hasFinished;
     public UnityEvent onFinish;
 
+    public GoalCamera goalCamera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,7 @@ public class Goal : MonoBehaviour
         if (hasFinished) return;
 
         LevelManager.instance.WinLevel();
+        goalCamera.ActivateGoalCamera(true);
 
         onFinish.Invoke();
     }
