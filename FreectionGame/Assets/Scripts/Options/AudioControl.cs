@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioControl : MonoBehaviour
 {
     public static float GeneralVolume = 0.8f;
-    public static float MusicVolume = 0.8f;
+    public static float MusicVolume = 0.6f;
     public static float SoundsVolume = 0.8f;
     [SerializeField] AudioSource mainMenuMusic;
     
