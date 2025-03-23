@@ -15,6 +15,11 @@ public class PostProcessingController : MonoBehaviour
     [SerializeField] private float vignetteCurveLog;
     [SerializeField] private AnimationCurve curveVignette;
 
+    bool slowed = false;
+
+    [SerializeField] private Color defaultColor;
+    [SerializeField] private Color slowedColor;
+
 
     [Header("Lens")]
     LensDistortion l;
@@ -29,6 +34,7 @@ public class PostProcessingController : MonoBehaviour
     {
         v = profile.GetSetting<Vignette>();
         l = profile.GetSetting<LensDistortion>();
+        v.color.value = defaultColor;
     }
 
     // Update is called once per frame
@@ -40,6 +46,7 @@ public class PostProcessingController : MonoBehaviour
 
     private void UpdateVignette()
     {
+        if (slowed) return;
         float t = Mathf.Log(rb.velocity.magnitude, vignetteCurveLog);
         Debug.Log("vign " + t);
         v.intensity.value = Mathf.Lerp(curveVignette.Evaluate(t), minVignetteIntensity, maxVignetteIntensity);
@@ -47,8 +54,23 @@ public class PostProcessingController : MonoBehaviour
     private void UpdateLens()
     {
         float t = Mathf.Log(rb.velocity.magnitude, lensCurveLog);
-        Debug.Log("lens " + t);
-        v.intensity.value = Mathf.Lerp(curveLens.Evaluate(t), minLensIntensity, maxLensIntensity);
+        //Debug.Log("lens " + t);
+        l.intensity.value = Mathf.Lerp(curveLens.Evaluate(t), minLensIntensity, maxLensIntensity);
+    }
+
+    public void EnterSlowZone()
+    {
+        Debug.Log("slowed");
+        slowed = true;
+        v.color.value = slowedColor;
+        v.intensity.value = maxVignetteIntensity;
+    }
+    public void ExitSlowZone()
+    {
+        Debug.Log("unslowed");
+        slowed = false;
+        v.color.value = defaultColor;
+
     }
 
 }

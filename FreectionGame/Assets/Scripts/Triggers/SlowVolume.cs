@@ -12,6 +12,7 @@ public class SlowVolume : MonoBehaviour
     {
         if (player != null) return;
         player = other.GetComponent<PlayerControls>();
+        player.postProcessController.EnterSlowZone();
     }
 
     void OnTriggerStay(Collider other)
@@ -27,6 +28,7 @@ public class SlowVolume : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        player.postProcessController.ExitSlowZone();
         if (player != null)
         {
             if (other.GetComponent<PlayerControls>() != null)
@@ -34,5 +36,6 @@ public class SlowVolume : MonoBehaviour
                 player = null;
             }
         }
+
     }
 }

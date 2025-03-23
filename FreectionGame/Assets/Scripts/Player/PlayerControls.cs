@@ -35,6 +35,7 @@ public class PlayerControls : MonoBehaviour
     [Header("Ground Visuals")]
     [SerializeField] Material groundMaterial;
     [SerializeField] float switchTextureDuration = 0.5f;
+    [SerializeField] public PostProcessingController postProcessController;
     [Header("Grappling Hook")]
     [HideInInspector] public List<GrippableObject> grippableColliders;
     [SerializeField] LineRenderer hookRenderer;

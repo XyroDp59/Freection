@@ -55,6 +55,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5978101401065099790}
     - target: {fileID: 183481235271714745, guid: 28211fc00822e72469e7fa9862de27ec, type: 3}
+      propertyPath: postProcessController
+      value: 
+      objectReference: {fileID: 314585844889871113}
+    - target: {fileID: 183481235271714745, guid: 28211fc00822e72469e7fa9862de27ec, type: 3}
       propertyPath: grippableColliders.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -845,6 +849,38 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 824894298210304446}
     - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: slowedColor.a
+      value: 0.67058825
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: slowedColor.b
+      value: 0.24907789
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: slowedColor.g
+      value: 0.32501554
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: slowedColor.r
+      value: 0.6377357
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: defaultColor.a
+      value: 0.65882355
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: defaultColor.b
+      value: 0.2603773
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: defaultColor.g
+      value: 0.2603773
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: defaultColor.r
+      value: 0.2603773
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
       propertyPath: maxLensIntensity
       value: -65
       objectReference: {fileID: 0}
@@ -964,6 +1000,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2431623962924096498}
   m_SourcePrefab: {fileID: 100100000, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+--- !u!114 &314585844889871113 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+  m_PrefabInstance: {fileID: 5577198536436501334}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3148e06ab52343a42bbe987679cbea6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1698500719069794830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6553997372199197016, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
