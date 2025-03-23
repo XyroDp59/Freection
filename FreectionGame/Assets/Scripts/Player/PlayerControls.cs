@@ -104,7 +104,7 @@ public class PlayerControls : MonoBehaviour
         grappleAction.performed += (_) => UseGrapple();
         grappleAction.canceled += (_) => ReleaseGrapple();
         boostAction.performed += (_) => Boost();
-        resetCheckpointAction.performed += (_) => TryRespawn(CheckpointManager.instance.currentCheckpoint, false);
+        resetCheckpointAction.performed += (_) => TryRespawn(CheckpointManager.instance.currentCheckpoint, CheckpointManager.instance.currentCheckpoint.keepVelocity);
         resetLevelAction.performed += (_) => TryReset();
         pauseMenuAction.performed += (_) => OpenPauseMenu();
 
@@ -425,7 +425,7 @@ public class PlayerControls : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f); //TODO : play animation
 
-        Respawn(CheckpointManager.instance.currentCheckpoint, false);
+        Respawn(CheckpointManager.instance.currentCheckpoint, CheckpointManager.instance.currentCheckpoint.keepVelocity);
         isDying = null;
 
         onDeathEnd.Invoke();

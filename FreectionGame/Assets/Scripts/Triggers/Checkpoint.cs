@@ -25,6 +25,7 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] Material activeMaterial;
 
     [SerializeField] bool isStart = false;
+    public bool keepVelocity = false;
 
     // Start is called before the first frame update
     void Start()
