@@ -15,6 +15,6 @@ MonoBehaviour:
   levelSceneName: Hills
   bestTime: 3.402823e+38
   checkpointTimesOnPB: []
-  thumbnail: {fileID: 21300000, guid: 7afddd0128a027740beef98ac59bc275, type: 3}
+  thumbnail: {fileID: 21300000, guid: 6158d8866f4718f418838917f4b167c0, type: 3}
   unlocked: 1
   isWon: 0

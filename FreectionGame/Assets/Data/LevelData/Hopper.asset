@@ -15,6 +15,6 @@ MonoBehaviour:
   levelSceneName: Hopper
   bestTime: 3.402823e+38
   checkpointTimesOnPB: []
-  thumbnail: {fileID: 21300000, guid: 1264184417ec0e14e9db5d3fcfed62f2, type: 3}
+  thumbnail: {fileID: 21300000, guid: 1596e5f9d92aeac40aa45caf49846ea3, type: 3}
   unlocked: 1
   isWon: 0

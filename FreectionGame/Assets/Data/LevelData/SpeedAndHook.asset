@@ -15,6 +15,6 @@ MonoBehaviour:
   levelSceneName: SpeedAndHook
   bestTime: 3.402823e+38
   checkpointTimesOnPB: []
-  thumbnail: {fileID: 21300000, guid: 5ecd240fb8a11304d929e9ef692c3f7a, type: 3}
+  thumbnail: {fileID: 21300000, guid: 82d1678f99920ab44a3be58e36cb6544, type: 3}
   unlocked: 1
   isWon: 0
