@@ -81,4 +81,12 @@ public class AudioManager : MonoBehaviour
             musicSource1.Stop();
         fadeCor = null;
     }
+
+    public void SetMusicVolume()
+    {
+        if (ms1)
+            musicSource2.volume = AudioControl.GeneralVolume * AudioControl.MusicVolume;
+        else
+            musicSource1.volume = AudioControl.GeneralVolume * AudioControl.MusicVolume;
+    }
 }
