@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.Windows;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -111,6 +112,11 @@ public class PlayerControls : MonoBehaviour
         inputs.Enable();
     }
 
+    private void OnDestroy()
+    {
+        inputs.Dispose();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -190,7 +196,7 @@ public class PlayerControls : MonoBehaviour
 
     public void SwitchBounce(bool nowBouncing)
     {
-        if (blockGameInputs) return;
+        if (blockGameInputs || sphereCollider == null) return;
 
         sphereCollider.material = nowBouncing ? bounceMat : nofrictionMat;
         isBouncing = nowBouncing;

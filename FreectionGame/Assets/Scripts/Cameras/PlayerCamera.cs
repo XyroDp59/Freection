@@ -42,6 +42,11 @@ public class PlayerCamera : MonoBehaviour
         inputs.Enable();
     }
 
+    private void OnDestroy()
+    {
+        inputs.Dispose();
+    }
+
     public void SetCamPosition(Vector3 position)
     {
         Quaternion rotation = Quaternion.identity;

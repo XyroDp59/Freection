@@ -67,6 +67,8 @@ public class LevelManager : MonoBehaviour
     {
         if (currentLevelData == null) return;
 
+        Time.timeScale = 1.0f;
+
         TimerManager.instance.StoreTimes();
         SerializedLevelData.SaveLevelData(currentLevelData.levelSceneName, currentLevelData);
 
