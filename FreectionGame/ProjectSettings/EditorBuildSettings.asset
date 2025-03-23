@@ -29,5 +29,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Data/Scenes/LevelScenes/Hopper.unity
     guid: 58ccb7dec1f185c48bb75599911dfbc8
+  - enabled: 1
+    path: Assets/Data/Scenes/LevelScenes/UTurn.unity
+    guid: 8a1a4047cc4e5e24689bbfb35b8352e7
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 453c5e8fd2f429d4e9da65cd47929c0e, type: 3}
