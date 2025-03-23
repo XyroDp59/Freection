@@ -195,7 +195,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6770838594741102436}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4736435575884159894, guid: 42b722d0b97d1b946a49a29f353e64e2, type: 3}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MenuValidate
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5213098148022180877
 GameObject:
   m_ObjectHideFlags: 0

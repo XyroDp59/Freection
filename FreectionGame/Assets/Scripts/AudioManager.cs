@@ -20,16 +20,23 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void PlaySound(string soundId, float pitch = 1f)
+    public static void PlaySound(string soundId)
     {
-        soundsSource.pitch = pitch;
-        soundsSource.volume = AudioControl.GeneralVolume * AudioControl.SoundsVolume;
-        soundsSource.PlayOneShot(sounds[soundId]);
+        Instance.soundsSource.pitch = 1;
+        Instance.soundsSource.volume = AudioControl.GeneralVolume * AudioControl.SoundsVolume;
+        Instance.soundsSource.PlayOneShot(Instance.sounds[soundId]);
     }
 
-    public void PlayMusic(string soundId)
+    public static void PlaySound(string soundId, float pitch)
     {
-        musicSource.volume = AudioControl.GeneralVolume * AudioControl.MusicVolume;
-        musicSource.PlayOneShot(musics[soundId]);
+        Instance.soundsSource.pitch = pitch;
+        Instance.soundsSource.volume = AudioControl.GeneralVolume * AudioControl.SoundsVolume;
+        Instance.soundsSource.PlayOneShot(Instance.sounds[soundId]);
+    }
+
+    public static void PlayMusic(string soundId)
+    {
+        Instance.musicSource.volume = AudioControl.GeneralVolume * AudioControl.MusicVolume;
+        Instance.musicSource.PlayOneShot(Instance.musics[soundId]);
     }
 }

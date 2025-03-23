@@ -76,6 +76,10 @@ MonoBehaviour:
       value: {fileID: 8300000, guid: c9de3cb0358f9ec4d99790847b2afa25, type: 3}
     - key: SetNofriction
       value: {fileID: 8300000, guid: 2e7feb409e10b334eb8e3273e27ad61a, type: 3}
+    - key: ReleaseGrapple
+      value: {fileID: 8300000, guid: d40a4105ec4325d4087071f8554ae5f3, type: 3}
+    - key: UseGrapple
+      value: {fileID: 8300000, guid: e879d8a78072f9848aded5424858a168, type: 3}
 --- !u!82 &3481018445849797785
 AudioSource:
   m_ObjectHideFlags: 0

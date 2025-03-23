@@ -164,6 +164,7 @@ public class PlayerControls : MonoBehaviour
         if (blockGameInputs || !canJump || !isGrounded) return;
 
         canJump = false;
+        AudioManager.PlaySound("Jump", UnityEngine.Random.Range(0.8f, 1.2f));
         rb.AddForce(jumpStrength * Vector3.up);
         StartCoroutine(lockJumpCor());
         if (deformCor != null)
@@ -201,6 +202,7 @@ public class PlayerControls : MonoBehaviour
         sphereCollider.material = nowBouncing ? bounceMat : nofrictionMat;
         isBouncing = nowBouncing;
 
+        AudioManager.PlaySound(nowBouncing ? "SetBouncy" : "SetNofriction");
         StartCoroutine(SwitchTextureCoroutine(!nowBouncing));
     }
 
@@ -225,6 +227,7 @@ public class PlayerControls : MonoBehaviour
         {
             if (deformCor != null)
                 StopCoroutine(deformCor);
+            AudioManager.PlaySound("Bounce", UnityEngine.Random.Range(0.8f, 1.2f));
             deformCor = StartCoroutine(DeformBallCoroutine(collision.impulse.normalized));
         }
     }
@@ -248,6 +251,7 @@ public class PlayerControls : MonoBehaviour
         hookJoint.zMotion = ConfigurableJointMotion.Limited;
         if (visualHookCor != null)
             StopCoroutine(visualHookCor);
+        AudioManager.PlaySound("UseGrapple");
         visualHookCor = StartCoroutine(HookCoroutine(true, grippableObjectPoint));
     }
 
@@ -263,6 +267,7 @@ public class PlayerControls : MonoBehaviour
 
         if (visualHookCor != null)
             StopCoroutine(visualHookCor);
+        AudioManager.PlaySound("ReleaseGrapple");
         visualHookCor = StartCoroutine(HookCoroutine(false, grippableObjectPoint));
     }
 
@@ -428,6 +433,8 @@ public class PlayerControls : MonoBehaviour
     {
         inputs.Disable();
         onDeathStart.Invoke();
+
+        AudioManager.PlaySound("Death");
 
         yield return new WaitForSeconds(1.0f); //TODO : play animation
 

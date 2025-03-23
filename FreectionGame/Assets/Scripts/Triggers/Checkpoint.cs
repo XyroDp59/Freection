@@ -44,6 +44,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (active)
         {
+            AudioManager.PlaySound("Checkpoint");
             CheckpointManager.instance.currentCheckpoint = this;
             position = player.transform.position;
             velocity = player.rb.velocity;

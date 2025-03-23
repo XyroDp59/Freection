@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
@@ -21,6 +22,8 @@ public class GameUI : MonoBehaviour
 
     public static GameUI instance;
 
+    GameObject lastSelectedGO;
+
     void Awake()
     {
         if (instance != null)
@@ -35,15 +38,22 @@ public class GameUI : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        lastSelectedGO = EventSystem.current.currentSelectedGameObject;
+
         PlayerControls.Instance.onDeathStart.AddListener(() => ShowDeathScreen(true));
         PlayerControls.Instance.onDeathEnd.AddListener(() => ShowDeathScreen(false));
 
         resetButton.onClick.AddListener(() => LevelManager.instance.ResetLevel(PlayerControls.Instance));
+        resetButton.onClick.AddListener(() => AudioManager.PlaySound("MenuValidate"));
+
         exitButton.onClick.AddListener(() => LevelManager.instance.ExitLevel(true));
+        exitButton.onClick.AddListener(() => AudioManager.PlaySound("MenuValidate"));
 
         pauseResetButton.onClick.AddListener(() => LevelManager.instance.ResetLevel(PlayerControls.Instance));
+        pauseResetButton.onClick.AddListener(() => AudioManager.PlaySound("MenuValidate"));
         pauseExitButton.onClick.AddListener(() => LevelManager.instance.ExitLevel(true));
+        pauseExitButton.onClick.AddListener(() => AudioManager.PlaySound("MenuValidate"));
     }
 
     // Update is called once per frame
@@ -76,6 +86,7 @@ public class GameUI : MonoBehaviour
 
     public void ShowPauseMenu(bool show)
     {
+        AudioManager.PlaySound(show ? "PauseMenuOpen" : "PauseMenuClose");
         pauseMenu.SetActive(show);
         TimerManager.instance.PauseTimer(show);
         Time.timeScale = show ? 0.0f : 1.0f;
