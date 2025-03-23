@@ -58,6 +58,8 @@ public class LevelManager : MonoBehaviour
             Goal.hasFinished = false;
         }
 
+        GameUI.instance.ShowPauseMenu(false);
+
         player.Respawn(CheckpointManager.instance.spawnPoint, false);
     }
 

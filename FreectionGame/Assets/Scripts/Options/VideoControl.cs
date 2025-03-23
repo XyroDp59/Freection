@@ -17,6 +17,8 @@ public class VideoControl : MonoBehaviour
     [SerializeField] GameObject confirmationMenu;
     [SerializeField] TextMeshProUGUI countdown;
 
+    bool isRevertingChanges = false;
+
     void Awake()
     {
         List<string> options = new List<string>();
@@ -63,6 +65,7 @@ public class VideoControl : MonoBehaviour
 
     public void ChangeResolution()
     {
+        if (isRevertingChanges) return;
         oldRes.width = Screen.currentResolution.width;
         oldRes.height = Screen.currentResolution.height;
         oldRes.refreshRate = Screen.currentResolution.refreshRate;
@@ -75,6 +78,7 @@ public class VideoControl : MonoBehaviour
 
     public void ChangeBackResolution()
     {
+        isRevertingChanges = true;
         if (issueCoroutine != null)
             StopCoroutine(issueCoroutine);
         confirmationMenu.SetActive(false);
@@ -91,6 +95,8 @@ public class VideoControl : MonoBehaviour
             }
         }
         Screen.SetResolution(currentResolution.width, currentResolution.height, fullscreenToggle.isOn, currentResolution.refreshRate);
+
+        isRevertingChanges = false;
     }
 
     public void ConfirmResolution()

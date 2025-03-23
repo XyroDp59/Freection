@@ -402,7 +402,8 @@ public class PlayerControls : MonoBehaviour
 
     public void OpenPauseMenu()
     {
-
+        if (blockGameInputs) return;
+        GameUI.instance.TogglePause();
     }
 
     #region Death
