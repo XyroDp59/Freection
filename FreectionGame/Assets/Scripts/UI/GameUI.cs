@@ -64,7 +64,7 @@ public class GameUI : MonoBehaviour
             float bestTime = TimerManager.instance.GetLevelTime().Value;
 
             currentRunTime.text = TimerManager.TimeToString(currentTime);
-            recordTime.text = TimerManager.TimeToString(bestTime);
+            recordTime.text = bestTime > 99 ? "-:--:---" : TimerManager.TimeToString(bestTime);
             newRecord.SetActive(currentTime < bestTime);
         }
     }
