@@ -44,7 +44,10 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _BounceToSlipperyCoeff: 1
+    - _LineSpacing: 7.5
+    - _LineWidth: 5
     m_Colors:
+    - _XYWeights: {r: 1, g: 1, b: 0, a: 0}
     - _textureSize: {r: 10, g: 10, b: 0, a: 0}
     - _voronoiFactor: {r: 50, g: 50, b: 50, a: 0}
   m_BuildTextureStacks: []
