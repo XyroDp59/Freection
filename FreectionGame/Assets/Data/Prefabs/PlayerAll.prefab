@@ -111,6 +111,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28211fc00822e72469e7fa9862de27ec, type: 3}
+--- !u!54 &824894298210304446 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 937838787456106174, guid: 28211fc00822e72469e7fa9862de27ec, type: 3}
+  m_PrefabInstance: {fileID: 464226551894212352}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5571942842819467789 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5414109503983297805, guid: 28211fc00822e72469e7fa9862de27ec, type: 3}
@@ -827,9 +832,89 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 1654142859951667523, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2274400309820283224, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
       propertyPath: field of view
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 824894298210304446}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: maxLensIntensity
+      value: -65
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: maxVignetteIntensity
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveLens.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveLens.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveLens.m_Curve.Array.data[0].inSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveLens.m_Curve.Array.data[1].inSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveLens.m_Curve.Array.data[0].outSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveLens.m_Curve.Array.data[1].outSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveVignette.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveVignette.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveLens.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveLens.m_Curve.Array.data[1].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveVignette.m_Curve.Array.data[0].inSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveVignette.m_Curve.Array.data[1].inSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveVignette.m_Curve.Array.data[0].outSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveVignette.m_Curve.Array.data[1].outSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveVignette.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276972663446087775, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      propertyPath: curveVignette.m_Curve.Array.data[1].tangentMode
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 6553997372199197016, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -874,7 +959,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1654142859951667523, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2431623962924096498}
   m_SourcePrefab: {fileID: 100100000, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
 --- !u!4 &1698500719069794830 stripped
 Transform:
@@ -886,3 +974,68 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 2274400309820283224, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
   m_PrefabInstance: {fileID: 5577198536436501334}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6598480095420789269 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1654142859951667523, guid: 430b8b3c73db4c64899dd20a9b1551bf, type: 3}
+  m_PrefabInstance: {fileID: 5577198536436501334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2431623962924096498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6598480095420789269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 1698500719069794830}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
