@@ -85,7 +85,7 @@ Material:
     - _GlossyReflections: 1
     - _LineBloomIntensity: 0.4
     - _LineBloomRange: 0.25
-    - _LineSpacing: 2
+    - _LineSpacing: 8
     - _LineWidth: 2
     - _Metallic: 0
     - _Mode: 0
