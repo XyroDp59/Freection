@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,14 +14,17 @@ public class Checkpoint : MonoBehaviour
 
     public UnityEvent onReachCheckpoint;
 
-    public Vector3 position;
-    public Vector3 velocity;
+    [NonSerialized] public Vector3 position;
+    [NonSerialized] public Vector3 velocity;
 
-    public Vector3 cameraPosition;
-    public Quaternion cameraRotation;
+    [NonSerialized] public Vector3 cameraPosition;
+    [NonSerialized] public Quaternion cameraRotation;
 
+    [SerializeField] Renderer crtMesh;
     [SerializeField] Material inactiveMaterial;
     [SerializeField] Material activeMaterial;
+
+    [SerializeField] bool isStart = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,20 +32,16 @@ public class Checkpoint : MonoBehaviour
         onReachCheckpoint.AddListener(() => TimerManager.instance.ReachCheckpoint(this));
 
         CheckpointManager.instance.checkpoints.Add(this);
+        if (isStart)
+        {
+            CheckpointManager.instance.spawnPoint = this;
+            PlayerControls.Instance.Spawn();
+        }
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void Activate(bool active, PlayerControls player)
     {
-        if (CheckpointManager.instance.currentCheckpoint == this) return;
-
-        PlayerControls player = other.GetComponent<PlayerControls>();
-        if (player == null || player.blockGameInputs) return;
-
-        if (CheckpointManager.instance.currentCheckpoint == null)
-        {
-            CheckpointManager.instance.currentCheckpoint = this;
-        }
-        else if (CheckpointManager.instance.currentCheckpoint.order <= order)
+        if (active)
         {
             CheckpointManager.instance.currentCheckpoint = this;
             position = player.transform.position;
@@ -51,6 +51,22 @@ public class Checkpoint : MonoBehaviour
             cameraRotation = Camera.main.transform.rotation;
 
             onReachCheckpoint.Invoke();
+        }
+
+        crtMesh.material = active ? activeMaterial : inactiveMaterial;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (CheckpointManager.instance.currentCheckpoint == this) return;
+
+        PlayerControls player = other.GetComponent<PlayerControls>();
+        if (player == null || player.blockGameInputs) return;
+
+        if (CheckpointManager.instance.currentCheckpoint == null || CheckpointManager.instance.currentCheckpoint.order <= order)
+        {
+            //CheckpointManager.instance.currentCheckpoint.Activate(false);
+            Activate(true, player);
         }
     }
 
