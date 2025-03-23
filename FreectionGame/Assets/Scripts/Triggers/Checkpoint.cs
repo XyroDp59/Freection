@@ -54,10 +54,10 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(respawnAnchor.transform.position, 0.5f);
         Gizmos.DrawRay(respawnAnchor.transform.position, respawnAnchor.transform.forward);
-    }
+    }*/
 }
