@@ -469,6 +469,8 @@ MonoBehaviour:
   trailCurveLog: 1000
   trailStartOffset: 0.75
   trailLengthLerp: 0.1
+  groundMaterial: {fileID: 2100000, guid: 4a971530630ad8d46a7b3429ce598d6e, type: 2}
+  switchTextureDuration: 0.5
   grippableColliders:
   - {fileID: 0}
   - {fileID: 0}
