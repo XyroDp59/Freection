@@ -193,4 +193,22 @@ public class TimerManager : MonoBehaviour
             checkpointDelta.SetActive(false);
         }
     }
+
+    public void Show(bool show)
+    {
+        if (show)
+        {
+            gameTimer.SetActive(true);
+        }
+        else
+        {
+            InterruptShowCheckpoint();
+            gameTimer.SetActive(false);
+        }
+    }
+
+    public KeyValuePair<float,float> GetLevelTime()
+    {
+        return new KeyValuePair<float, float>(gameTime, bestTime);
+    }
 }

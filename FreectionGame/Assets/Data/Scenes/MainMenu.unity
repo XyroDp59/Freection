@@ -1579,7 +1579,7 @@ MonoBehaviour:
   gradientColor2: {r: 0.36311918, g: 0.20545568, b: 0.5377358, a: 0.5019608}
   gradientAmplitude: 0.5
   gradientPeriod: 0.5
-  wonColor: {r: 0, g: 1, b: 0.65917397, a: 1}
+  wonColor: {r: 0.5377358, g: 0.1699448, b: 0.38671148, a: 1}
 --- !u!1001 &1667425857
 PrefabInstance:
   m_ObjectHideFlags: 0
