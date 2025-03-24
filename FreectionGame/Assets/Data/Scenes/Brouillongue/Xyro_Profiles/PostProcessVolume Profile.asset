@@ -18,7 +18,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.2988346
+    value: 0.61869067
   intensityX:
     overrideState: 0
     value: 1
@@ -55,13 +55,13 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 0.6377357, g: 0.32501554, b: 0.24907789, a: 0.67058825}
+    value: {r: 0.2603773, g: 0.2603773, b: 0.2603773, a: 0.65882355}
   center:
     overrideState: 0
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.4
+    value: 0.17289689
   smoothness:
     overrideState: 1
     value: 1
