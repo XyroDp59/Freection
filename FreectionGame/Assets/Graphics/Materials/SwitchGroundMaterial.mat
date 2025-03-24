@@ -43,7 +43,7 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _BounceToSlipperyCoeff: 0.0806808
+    - _BounceToSlipperyCoeff: 1
     - _LineSpacing: 7.5
     - _LineWidth: 5
     m_Colors:
