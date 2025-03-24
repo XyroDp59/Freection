@@ -29,6 +29,7 @@ public class PlayerCamera : MonoBehaviour
 
     private Inputs inputs;
     InputAction zoomAction;
+    InputAction cameraXY;
 
     private void Awake()
     {
@@ -84,6 +85,11 @@ public class PlayerCamera : MonoBehaviour
             FOV = minFOV + (maxFOV-minFOV) * curveFOV.Evaluate(v);
         else FOV = minFOV + (maxFOV - minFOV) * curveFOV.keys[curveFOV.length - 1].value;
         freeLook.m_Lens.FieldOfView = FOV;
+
+        //Custom XY axis
+        Vector2 xyinput = cameraXY.ReadValue<Vector2>();
+        freeLook.m_XAxis.Value += xyinput.x;
+        freeLook.m_YAxis.Value += xyinput.y;
     }
 
 
