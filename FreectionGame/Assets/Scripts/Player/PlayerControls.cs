@@ -104,7 +104,7 @@ public class PlayerControls : MonoBehaviour
         bounceAction.performed += (_) => SwitchBounce(true);
         bounceAction.canceled += (_) => SwitchBounce(false);
         grappleAction.performed += (_) => UseGrapple();
-        grappleAction.canceled += (_) => ReleaseGrapple();
+        grappleAction.canceled += (_) => ReleaseGrapple(false);
         boostAction.performed += (_) => Boost();
         resetCheckpointAction.performed += (_) => TryRespawn(CheckpointManager.instance.currentCheckpoint, CheckpointManager.instance.currentCheckpoint.keepVelocity);
         resetLevelAction.performed += (_) => TryReset();
@@ -256,7 +256,7 @@ public class PlayerControls : MonoBehaviour
         visualHookCor = StartCoroutine(HookCoroutine(true, grippableObjectPoint));
     }
 
-    public void ReleaseGrapple()
+    public void ReleaseGrapple(bool instant)
     {
         if (blockGameInputs) return;
 
@@ -266,10 +266,17 @@ public class PlayerControls : MonoBehaviour
         hookJoint.yMotion = ConfigurableJointMotion.Free;
         hookJoint.zMotion = ConfigurableJointMotion.Free;
 
-        if (visualHookCor != null)
-            StopCoroutine(visualHookCor);
-        AudioManager.PlaySound("ReleaseGrapple");
-        visualHookCor = StartCoroutine(HookCoroutine(false, grippableObjectPoint));
+        if (!instant && hookRenderer.enabled)
+        {
+            if (visualHookCor != null)
+                StopCoroutine(visualHookCor);
+            AudioManager.PlaySound("ReleaseGrapple");
+            visualHookCor = StartCoroutine(HookCoroutine(false, grippableObjectPoint));
+        }
+        else 
+        {
+            hookRenderer.enabled = false;
+        }
     }
 
     IEnumerator HookCoroutine(bool hooking, Vector3 point)
@@ -386,6 +393,8 @@ public class PlayerControls : MonoBehaviour
 
     public void Respawn(Checkpoint checkpoint, bool keepVel)
     {
+        ReleaseGrapple(true);
+
         if (checkpoint == CheckpointManager.instance.spawnPoint) //Reset game
         {
             CheckpointManager.instance.currentCheckpoint = checkpoint;
