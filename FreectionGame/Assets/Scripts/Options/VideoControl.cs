@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 
-public class VideoControl : MonoBehaviour
+public class VideoControl : OptionPanel
 {
     [SerializeField] Toggle fullscreenToggle;
     Resolution currentResolution;
@@ -32,35 +32,7 @@ public class VideoControl : MonoBehaviour
         }
         resolutionsDropdown.AddOptions(options);
 
-        bool isFullScreen = true;
-        if (PlayerPrefs.HasKey("Fullscreen"))
-        {
-            isFullScreen = PlayerPrefs.GetInt("Fullscreen") == 0;
-        }
-        fullscreenToggle.isOn = isFullScreen;
-        
-        if (PlayerPrefs.HasKey("ScreenHeight"))
-        {
-            currentResolution.height = PlayerPrefs.GetInt("ScreenHeight");
-            currentResolution.width = PlayerPrefs.GetInt("ScreenWidth");
-            currentResolution.refreshRate = PlayerPrefs.GetInt("ScreenRefreshRate");
-            for (int i = 0; i < Screen.resolutions.Length; ++i)
-            {
-                if (Screen.resolutions[i].height == currentResolution.height &&
-                    Screen.resolutions[i].width == currentResolution.width &&
-                    Screen.resolutions[i].refreshRate == currentResolution.refreshRate)
-                {
-                    resolutionsDropdown.value = i;
-                    break;
-                }
-            }
-        }
-        else
-        {
-            currentResolution = Screen.resolutions[Screen.resolutions.Length - 1];
-            resolutionsDropdown.value = Screen.resolutions.Length - 1;
-        }
-        //Screen.SetResolution(currentResolution.width, currentResolution.height, isFullScreen, currentResolution.refreshRate);
+        LoadPrefs();
     }
 
     public void ChangeResolution()
@@ -122,5 +94,41 @@ public class VideoControl : MonoBehaviour
         }
         ChangeBackResolution();
         issueCoroutine = null;
+    }
+
+    override public void LoadPrefs()
+    {
+        base.LoadPrefs();
+
+        bool isFullScreen = true;
+        if (PlayerPrefs.HasKey("Fullscreen"))
+        {
+            isFullScreen = PlayerPrefs.GetInt("Fullscreen") == 0;
+        }
+        fullscreenToggle.isOn = isFullScreen;
+
+        if (PlayerPrefs.HasKey("ScreenHeight"))
+        {
+            currentResolution.height = PlayerPrefs.GetInt("ScreenHeight");
+            currentResolution.width = PlayerPrefs.GetInt("ScreenWidth");
+            currentResolution.refreshRate = PlayerPrefs.GetInt("ScreenRefreshRate");
+            for (int i = 0; i < Screen.resolutions.Length; ++i)
+            {
+                if (Screen.resolutions[i].height == currentResolution.height &&
+                    Screen.resolutions[i].width == currentResolution.width &&
+                    Screen.resolutions[i].refreshRate == currentResolution.refreshRate)
+                {
+                    resolutionsDropdown.value = i;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            currentResolution = Screen.resolutions[Screen.resolutions.Length - 1];
+            resolutionsDropdown.value = Screen.resolutions.Length - 1;
+        }
+
+        //Screen.SetResolution(currentResolution.width, currentResolution.height, fullscreenToggle.isOn, currentResolution.refreshRate);
     }
 }

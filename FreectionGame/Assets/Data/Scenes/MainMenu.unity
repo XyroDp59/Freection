@@ -1794,6 +1794,21 @@ MonoBehaviour:
   gradientAmplitude: 0.5
   gradientPeriod: 0.5
   wonColor: {r: 0.5377358, g: 0.1699448, b: 0.38671148, a: 1}
+  onMenuLoaded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1857753298054381776}
+        m_TargetAssemblyTypeName: Options, Assembly-CSharp
+        m_MethodName: LoadPrefs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1667425857
 PrefabInstance:
   m_ObjectHideFlags: 0

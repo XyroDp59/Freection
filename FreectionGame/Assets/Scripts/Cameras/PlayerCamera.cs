@@ -1,8 +1,12 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Cinemachine.CinemachineCore;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -31,15 +35,40 @@ public class PlayerCamera : MonoBehaviour
     InputAction zoomAction;
     InputAction cameraXY;
 
+
+    float sensitivityX;
+    float sensitivityY;
+    static float inputX;
+    static float inputY;
+
     private void Awake()
     {
         if(Instance == null) Instance = this;
         else Destroy(Instance);
 
+        CinemachineCore.GetInputAxis = PlayerCamera.GetAxis;
+
+        if (PlayerPrefs.HasKey("sensitivity"))
+        {
+            sensitivityX = PlayerPrefs.GetFloat("sensitivity");
+            sensitivityY = sensitivityX;
+        }
+        else
+        {
+            sensitivityX = 1.0f;
+            sensitivityY = 1.0f;
+        }
+        if (PlayerPrefs.HasKey("sensitivityXY"))
+        {
+            float ratio = PlayerPrefs.GetFloat("sensitivityXY");
+            sensitivityX *= ratio;
+        }
+
         freeLook = GetComponent<CinemachineFreeLook>();
 
         inputs = new Inputs();
         zoomAction = inputs.Player.Zoom;
+        cameraXY = inputs.Player.Look;
         inputs.Enable();
     }
 
@@ -86,11 +115,47 @@ public class PlayerCamera : MonoBehaviour
         else FOV = minFOV + (maxFOV - minFOV) * curveFOV.keys[curveFOV.length - 1].value;
         freeLook.m_Lens.FieldOfView = FOV;
 
-        //Custom XY axis
-        Vector2 xyinput = cameraXY.ReadValue<Vector2>();
-        freeLook.m_XAxis.Value += xyinput.x;
-        freeLook.m_YAxis.Value += xyinput.y;
+        //Custom look input
+        if (IsKeyboardOrMouse())
+        {
+            MouseLook();
+        }
+        else
+        {
+            ControllerLook();
+        }
+    }
+
+    public bool IsKeyboardOrMouse()
+    {
+        bool hasGamepad = Gamepad.current != null;
+        return !hasGamepad;
+        InputDevice activeDevice = cameraXY.activeControl.device;
+        return activeDevice.description.deviceClass.Equals("Keyboard") || activeDevice.description.deviceClass.Equals("Mouse");
     }
 
 
+    private void MouseLook()
+    {
+        Vector2 xyinput = cameraXY.ReadValue<Vector2>();
+        //freeLook.m_XAxis.m_InputAxisValue = xyinput.x * 0.1f;
+        //freeLook.m_YAxis.m_InputAxisValue = xyinput.y * 0.1f;
+
+        inputX = xyinput.x * sensitivityX;
+        inputY = xyinput.y * sensitivityY;
+    }
+
+    private void ControllerLook()
+    {
+        Vector2 xyinput = cameraXY.ReadValue<Vector2>();
+        inputX = xyinput.x * sensitivityX;
+        inputY = xyinput.y * sensitivityY;
+    }
+
+    public static float GetAxis(string axisName)
+    {
+        if (axisName == "Mouse Y") return inputY;
+        else if (axisName == "Mouse X") return inputX;
+        else return Input.GetAxis(axisName);
+    }
 }

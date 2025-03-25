@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class MainMenu : MonoBehaviour
 {
@@ -21,11 +22,14 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] Color wonColor;
 
+    [SerializeField] UnityEvent onMenuLoaded;
+
     GameObject lastSelectedGO;
 
     // Start is called before the first frame update
     void Start()
     {
+        onMenuLoaded.Invoke();
         AudioManager.PlayMusic("Fading");
     }
 

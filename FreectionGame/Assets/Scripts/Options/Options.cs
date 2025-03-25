@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -86,6 +87,16 @@ public class Options : MonoBehaviour
         for (int i = 0; i < PanelsShadows.Count; ++i)
         {
             PanelsShadows[i].color = new Color(PanelsShadows[i].color.r, PanelsShadows[i].color.g, PanelsShadows[i].color.b, (i == index) ? PanelsShadowsBaseAlpha[i] : 0.0f);
+        }
+    }
+
+    public void LoadPrefs()
+    {
+        Init();
+        for (int i = 0; i < Panels.Count; ++i)
+        {
+            OptionPanel panel = Panels[i].GetComponent<OptionPanel>();
+            panel.LoadPrefs();
         }
     }
 }
