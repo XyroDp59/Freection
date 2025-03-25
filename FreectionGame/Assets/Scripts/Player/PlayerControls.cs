@@ -32,6 +32,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] AnimationCurve trailLengthPerSpeedCurve;
     [SerializeField] float trailCurveLog;
     [SerializeField] float trailStartOffset;
+    [SerializeField] ParticleSystem killParticles;
     [SerializeField] float trailLengthLerp;
     [Header("Ground Visuals")]
     [SerializeField] Material groundMaterial;
@@ -450,7 +451,17 @@ public class PlayerControls : MonoBehaviour
 
         AudioManager.PlaySound("Death");
 
-        yield return new WaitForSeconds(1.0f); //TODO : play animation
+        killParticles.Play();
+        
+        visualSphere.gameObject.SetActive(false);
+        rb.isKinematic = true;
+
+        yield return new WaitForSeconds(0.6f); //TODO : play animation
+        GameUI.instance.ShowDeathScreen(0.2f, 0.3f, 0.2f);
+        yield return new WaitForSeconds(0.3f);
+
+        visualSphere.gameObject.SetActive(true);
+        rb.isKinematic = false;
 
         Respawn(CheckpointManager.instance.currentCheckpoint, CheckpointManager.instance.currentCheckpoint.keepVelocity);
         isDying = null;

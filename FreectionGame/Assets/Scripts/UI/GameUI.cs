@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
-    [SerializeField] GameObject death;
     [SerializeField] GameObject endGame;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] Button resetButton;
@@ -19,6 +18,11 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentRunTime;
     [SerializeField] TextMeshProUGUI recordTime;
     [SerializeField] GameObject newRecord;
+
+    [Header("RespawnAnim")]
+    [SerializeField] RectTransform deathTransitionImage;
+    [SerializeField] GameObject respawnRenderTex;
+    [SerializeField] Rigidbody bounceBall;
 
     public static GameUI instance;
 
@@ -40,9 +44,6 @@ public class GameUI : MonoBehaviour
     void Start()
     {   
         lastSelectedGO = EventSystem.current.currentSelectedGameObject;
-
-        PlayerControls.Instance.onDeathStart.AddListener(() => ShowDeathScreen(true));
-        PlayerControls.Instance.onDeathEnd.AddListener(() => ShowDeathScreen(false));
 
         resetButton.onClick.AddListener(() => LevelManager.instance.ResetLevel(PlayerControls.Instance));
         resetButton.onClick.AddListener(() => AudioManager.PlaySound("MenuValidate"));
@@ -79,9 +80,43 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    public void ShowDeathScreen(bool show)
+    public void ShowDeathScreen(float fillT, float waitT, float removeT)
     {
-        death.SetActive(show);
+        StartCoroutine(DeathScreenCor(fillT, waitT, removeT));
+    }
+
+    IEnumerator DeathScreenCor(float fillT, float waitT, float removeT)
+    {
+        var timeElapsed = 0f;
+        deathTransitionImage.anchorMin = Vector2.right;
+        deathTransitionImage.anchorMax = Vector2.one + Vector2.right;
+
+        var ball = Instantiate(bounceBall.gameObject);
+        ball.SetActive(true);
+        ball.GetComponent<Rigidbody>().velocity = 20 * new Vector3(-2,-1f,0);
+
+        while (timeElapsed < fillT)
+        {
+            deathTransitionImage.anchorMin = Vector2.Lerp(deathTransitionImage.anchorMin, Vector2.zero, .1f);
+            deathTransitionImage.anchorMax = deathTransitionImage.anchorMin + Vector2.one;
+            timeElapsed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        deathTransitionImage.anchorMin = Vector2.zero;
+        deathTransitionImage.anchorMax = deathTransitionImage.anchorMin + Vector2.one;
+        yield return new WaitForSeconds(waitT);
+
+        timeElapsed = 0f;
+        while (timeElapsed < removeT)
+        {
+            deathTransitionImage.anchorMin = Vector2.Lerp(deathTransitionImage.anchorMin, -Vector2.right, .1f);
+            deathTransitionImage.anchorMax = deathTransitionImage.anchorMin + Vector2.one;
+            timeElapsed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        deathTransitionImage.anchorMin = -Vector2.right;
+        deathTransitionImage.anchorMax = deathTransitionImage.anchorMin + Vector2.one;
+        Destroy(ball);
     }
 
     public void ShowPauseMenu(bool show)
