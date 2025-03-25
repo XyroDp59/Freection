@@ -82,6 +82,8 @@ public class LevelManager : MonoBehaviour
     {
         Goal.hasFinished = true;
         if (!currentLevelData.isWon) currentLevelData.isWon = true;
+        PlayerControls.Instance.ReleaseGrapple(true);
+        PlayerControls.Instance.SwitchBounce(false);
         PlayerControls.Instance.blockGameInputs = true;
         TimerManager.instance.StopTimer();
         GameUI.instance.ShowEndScreen(true);
