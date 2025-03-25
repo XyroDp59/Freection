@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -367,12 +368,13 @@ public class PlayerControls : MonoBehaviour
     {
         Checkpoint spawn = CheckpointManager.instance.spawnPoint;
         CheckpointManager.instance.currentCheckpoint = spawn;
+
         transform.position = spawn.respawnAnchor.transform.position;
+        spawn.cameraPosition = spawn.cameraRespawnAnchor.transform.position;
+        spawn.cameraRotation = spawn.cameraRespawnAnchor.transform.rotation;
+        rb.velocity = Vector3.zero;
 
-        spawn.cameraPosition = spawn.respawnAnchor.transform.position;
-        spawn.cameraRotation = spawn.respawnAnchor.transform.rotation;
-
-        PlayerCamera.Instance.SetCamTransform(spawn.cameraPosition, spawn.cameraRotation);
+        PlayerCamera.Instance.SetCamTransform(spawn.cameraRespawnAnchor.transform.position, spawn.cameraRespawnAnchor.transform.rotation);
 
         TimerManager.instance.StartTimer();
 
@@ -402,17 +404,19 @@ public class PlayerControls : MonoBehaviour
             onLevelReset.Invoke();
         }
 
-        PlayerCamera.Instance.SetCamTransform(checkpoint.cameraPosition, checkpoint.cameraRotation);
-
         if (keepVel)
         {
             transform.position = checkpoint.position;
             rb.velocity = checkpoint.velocity;
+            PlayerCamera.Instance.SetCamTransform(checkpoint.cameraPosition, checkpoint.cameraRotation);
+            //Camera.main.transform.SetPositionAndRotation(checkpoint.cameraPosition, checkpoint.cameraRotation);
         }
         else
         {
             transform.position = checkpoint.respawnAnchor.transform.position;
             rb.velocity = Vector3.zero;
+            PlayerCamera.Instance.SetCamTransform(checkpoint.cameraRespawnAnchor.transform.position, checkpoint.cameraRespawnAnchor.transform.rotation);
+            Camera.main.transform.SetPositionAndRotation(checkpoint.cameraRespawnAnchor.transform.position, checkpoint.cameraRespawnAnchor.transform.rotation);
         }
 
         onRespawn.Invoke();

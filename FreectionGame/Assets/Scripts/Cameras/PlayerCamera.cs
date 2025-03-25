@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.PostProcessing;
 using static Cinemachine.CinemachineCore;
 
 public class PlayerCamera : MonoBehaviour
@@ -31,6 +32,8 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float maxFOV = 75f;
     float FOV;
 
+
+    public CinemachineBrain brain;
     private Inputs inputs;
     InputAction zoomAction;
     InputAction cameraXY;
@@ -85,7 +88,10 @@ public class PlayerCamera : MonoBehaviour
 
     public void SetCamTransform(Vector3 position, Quaternion rotation)
     {
+        //Disabling the brain prevents camera lerp from occuring. Thus teleporting the camera
+        brain.enabled = false;
         freeLook.ForceCameraPosition(position, rotation);
+        brain.enabled = true;
     }
 
 

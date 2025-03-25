@@ -11,6 +11,7 @@ public class Checkpoint : MonoBehaviour
     public int order;
 
     public GameObject respawnAnchor;
+    public GameObject cameraRespawnAnchor;
 
     public UnityEvent onReachCheckpoint;
 
@@ -72,10 +73,14 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(respawnAnchor.transform.position, 0.5f);
         Gizmos.DrawRay(respawnAnchor.transform.position, respawnAnchor.transform.forward);
-    }*/
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(cameraRespawnAnchor.transform.position, 0.5f);
+        Gizmos.DrawRay(cameraRespawnAnchor.transform.position, cameraRespawnAnchor.transform.forward);
+    }
 }

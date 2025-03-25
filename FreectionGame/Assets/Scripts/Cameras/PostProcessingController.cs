@@ -48,7 +48,7 @@ public class PostProcessingController : MonoBehaviour
     {
         if (slowed) return;
         float t = Mathf.Log(1 + rb.velocity.magnitude, vignetteCurveLog);
-        Debug.Log("vign " + t);
+        //Debug.Log("vign " + t);
         v.intensity.value = Mathf.Lerp(curveVignette.Evaluate(t), minVignetteIntensity, maxVignetteIntensity);
     }
     private void UpdateLens()
